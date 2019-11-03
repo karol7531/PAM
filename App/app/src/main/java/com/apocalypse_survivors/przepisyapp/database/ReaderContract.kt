@@ -34,6 +34,7 @@ internal object ReaderContract {
 
         const val COL_NAME = "name"          // String      -> TEXT     NOT NULL
         const val COL_CATEGORY = "c_id"      // #Int        -> REFERENCES Categories.id
+        const val COL_SUBCATEGORY = "sc_id"  // #Int        -> REFERENCES Categories.id
         const val COL_DESCRIPTION = "desc"   // String      -> TEXT
         const val COL_IMAGE = "image"        // String      -> TEXT
         const val COL_TIME = "time"          // Int         -> INTEGER              CHECK(time >= 0)
@@ -44,6 +45,7 @@ internal object ReaderContract {
             "CREATE TABLE $TABLE_NAME (" +
                     "${BaseColumns._ID} INTEGER PRIMARY KEY NOT NULL, " +
                     "FOREIGN KEY($COL_CATEGORY) REFERENCES ${Categories.TABLE_NAME}(${Categories.COL_NAME}), " +
+                    "FOREIGN KEY($COL_SUBCATEGORY) REFERENCES ${Categories.TABLE_NAME}(${Categories.COL_NAME}), " +
                     "$COL_NAME TEXT NOT NULL, " +
                     "$COL_DESCRIPTION TEXT, " +
                     "$COL_IMAGE TEXT, " +

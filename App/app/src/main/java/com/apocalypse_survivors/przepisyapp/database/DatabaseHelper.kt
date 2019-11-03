@@ -55,11 +55,12 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nul
     }
 
     //Recipe
-    fun insertRecipe(name: String, category: CategoryType, desc: String, image: String, time: Int, portion: Int): Long{
+    fun insertRecipe(name: String, category: CategoryType, subcategory: CategoryType, desc: String, image: String, time: Int, portion: Int): Long{
         val db = this.writableDatabase
         val values = ContentValues().apply {
             put(ReaderContract.Recipes.COL_NAME, name)
             put(ReaderContract.Recipes.COL_CATEGORY, category.toString())
+            put(ReaderContract.Recipes.COL_SUBCATEGORY, subcategory.toString())
             put(ReaderContract.Recipes.COL_DESCRIPTION, desc)
             put(ReaderContract.Recipes.COL_IMAGE, image)
             put(ReaderContract.Recipes.COL_TIME, time)
@@ -69,11 +70,12 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nul
         return db.insert(ReaderContract.Recipes.TABLE_NAME, null, values)
     }
 
-    fun updateRecipe(id: Long, name: String, category: CategoryType, desc: String, image: String, time: Int, portion: Int): Int{
+    fun updateRecipe(id: Long, name: String, category: CategoryType, subcategory: CategoryType, desc: String, image: String, time: Int, portion: Int): Int{
         val db = this.writableDatabase
         val values = ContentValues().apply {
             put(ReaderContract.Recipes.COL_NAME, name)
             put(ReaderContract.Recipes.COL_CATEGORY, category.toString())
+            put(ReaderContract.Recipes.COL_SUBCATEGORY, subcategory.toString())
             put(ReaderContract.Recipes.COL_DESCRIPTION, desc)
             put(ReaderContract.Recipes.COL_IMAGE, image)
             put(ReaderContract.Recipes.COL_TIME, time)
