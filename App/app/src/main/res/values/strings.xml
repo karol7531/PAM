@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">RecipesApp</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Recipes App</string>
+    <string name="nav_header_subtitle">Welcome! Choose category</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_category">Category</string>
+    <string name="menu_modify">Modify</string>
+    <string name="menu_product">Product</string>
+    <string name="menu_steps">Steps</string>
+
+    <string name="ingredients">Ingredients</string>
+    <string name="steps">Steps</string>
+    <string name="menu_salads">Salads</string>
+    <string name="menu_soups">Soups</string>
+    <string name="menu_dishes">Dishes</string>
+    <string name="menu_desserts">Desserts</string>
+</resources>
