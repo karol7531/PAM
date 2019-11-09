@@ -24,7 +24,7 @@ enum class CategoryType(val isMainCategory: Boolean) {
         SPONGE_CAKES(false),
         YEAST_DOUGH(false),
         CAKES_WITH_A_MASS(false),
-        //cakes
+        BIRTHDAY_CAKES(false),
         CUPCAKES_MUFFINS(false),
     DESSERTS(true),
         FRUIT_DESSERTS(false),

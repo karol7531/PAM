@@ -24,6 +24,8 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nul
         db!!.execSQL(ReaderContract.Recipes.SQL_CREATE_RECIPES)
         db!!.execSQL(ReaderContract.Steps.SQL_CREATE_STEPS)
         db!!.execSQL(ReaderContract.Ingredients.SQL_CREATE_INGREDIENTS)
+        insertCategories()
+        insertMeasures()
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -35,14 +37,22 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nul
         onCreate(db)
     }
 
-    //Category
-    private fun insertCategory(name:String, desc:String):Long{
+    //CategoryEntity
+    private fun insertCategory(name:String, desc:String?):Long{
         val db = this.writableDatabase
         val values = ContentValues().apply {
             put(ReaderContract.Categories.COL_NAME, name)
-            put(ReaderContract.Categories.COL_DESCRIPTION, desc)
+            if (desc != null) {
+                put(ReaderContract.Categories.COL_DESCRIPTION, desc)
+            }
         }
         return db.insert(ReaderContract.Categories.TABLE_NAME, null, values)
+    }
+
+    private fun insertCategories(){
+        enumValues<CategoryType>().forEach {
+            insertCategory(it.name, null)
+        }
     }
 
     //Measure
@@ -52,6 +62,12 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nul
             put(ReaderContract.Measures.COL_NAME, name)
         }
         return db.insert(ReaderContract.Measures.TABLE_NAME, null, values)
+    }
+
+    private fun insertMeasures(){
+        enumValues<MeasureType>().forEach {
+            insertMeasure(it.name)
+        }
     }
 
     //Recipe

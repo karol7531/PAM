@@ -22,10 +22,7 @@ class ModifyFragment : Fragment() {
         galleryViewModel =
             ViewModelProviders.of(this).get(ModifyViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_modify, container, false)
-        val textView: TextView = root.findViewById(R.id.text_gallery)
-        galleryViewModel.text.observe(this, Observer {
-            textView.text = it
-        })
+
         return root
     }
 }

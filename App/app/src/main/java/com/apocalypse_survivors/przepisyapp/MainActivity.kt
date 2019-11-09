@@ -13,6 +13,11 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
+import androidx.room.Room
+import com.apocalypse_survivors.przepisyapp.database.AppDatabase
+import com.apocalypse_survivors.przepisyapp.database.DAO.CategoryDAO
+import com.apocalypse_survivors.przepisyapp.database.Entities.CategoryEntity
+import com.apocalypse_survivors.przepisyapp.recipe.CategoryType
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,12 +34,31 @@ class MainActivity : AppCompatActivity() {
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null).show()
 //        }
+        setupDrawer()
+
+
+        var db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "RecipesDB").build()
+
+        Thread{
+            var cat = CategoryEntity(CategoryType.CAKES.toString(), "")
+            db.categoryDAO().save(cat)
+        }.start()
+
+
+
+    }
+
+    private fun setupDrawer() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_category, R.id.nav_desserts, R.id.nav_dishes, R.id.nav_soups, R.id.nav_salads
+                R.id.nav_category,
+                R.id.nav_desserts,
+                R.id.nav_dishes,
+                R.id.nav_soups,
+                R.id.nav_salads
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
