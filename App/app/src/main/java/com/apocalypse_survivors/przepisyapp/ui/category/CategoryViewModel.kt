@@ -1,13 +1,22 @@
 package com.apocalypse_survivors.przepisyapp.ui.category
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.*
+import com.apocalypse_survivors.przepisyapp.database.entities.CategoryEntity
+import com.apocalypse_survivors.przepisyapp.repositories.CategoryRepo
+import kotlinx.coroutines.launch
 
-class CategoryViewModel : ViewModel() {
+class CategoryViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is category Fragment"
+    private val repository: CategoryRepo
+
+    init {
+        repository = CategoryRepo(application)
     }
-    val text: LiveData<String> = _text
+
+    fun insert(categoryEntity: CategoryEntity) = viewModelScope.launch {
+        repository.insert(categoryEntity)
+    }
+
+
 }

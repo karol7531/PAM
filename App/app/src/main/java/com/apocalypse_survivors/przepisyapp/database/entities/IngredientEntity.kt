@@ -1,6 +1,5 @@
-package com.apocalypse_survivors.przepisyapp.database.Entities
+package com.apocalypse_survivors.przepisyapp.database.entities
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -17,19 +16,16 @@ import androidx.room.PrimaryKey
             parentColumns = ["name"],
             childColumns = ["measure_id"]
         )])
-class IngredientEntity (
-    @PrimaryKey
-    val id : Int,
+data class IngredientEntity (
 
-    @ColumnInfo(name = "recipe_id")
     val recipe_id : Int,
 
-    @ColumnInfo(name = "measure_id")
     val measure_id : Int,
 
-    @ColumnInfo(name = "amount")
     val amount : Double,
 
-    @ColumnInfo(name = "product")
     val product : String
-)
+){
+    @PrimaryKey(autoGenerate = true)
+    var id : Int = 0
+}

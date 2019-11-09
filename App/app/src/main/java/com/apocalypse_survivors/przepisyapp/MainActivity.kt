@@ -1,8 +1,6 @@
 package com.apocalypse_survivors.przepisyapp
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -12,12 +10,11 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import android.view.Menu
 import androidx.room.Room
 import com.apocalypse_survivors.przepisyapp.database.AppDatabase
-import com.apocalypse_survivors.przepisyapp.database.DAO.CategoryDAO
-import com.apocalypse_survivors.przepisyapp.database.Entities.CategoryEntity
+import com.apocalypse_survivors.przepisyapp.database.entities.CategoryEntity
 import com.apocalypse_survivors.przepisyapp.recipe.CategoryType
+import com.apocalypse_survivors.przepisyapp.repositories.CategoryRepo
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,12 +34,13 @@ class MainActivity : AppCompatActivity() {
         setupDrawer()
 
 
-        var db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "RecipesDB").build()
 
-        Thread{
-            var cat = CategoryEntity(CategoryType.CAKES.toString(), "")
-            db.categoryDAO().save(cat)
-        }.start()
+//        var db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "RecipesDB").build()
+//
+//        Thread{
+//            var cat = CategoryEntity(CategoryType.CAKES.toString(), "")
+//            db.categoryDAO().insert(cat)
+//        }.start()
 
 
 

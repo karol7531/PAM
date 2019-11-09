@@ -1,19 +1,20 @@
 package com.apocalypse_survivors.przepisyapp.database.DAO
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import com.apocalypse_survivors.przepisyapp.database.Entities.RecipeEntity
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
 
 @Dao
 interface RecipeDAO {
     @Insert
-    fun save(category : RecipeEntity)
+    suspend fun insert(recipe : RecipeEntity)
+
+    @Update
+    suspend fun update(recipe : RecipeEntity)
 
     @Delete
-    fun delete(category: RecipeEntity)
+    suspend fun delete(recipe: RecipeEntity)
 
     @Query("SELECT * FROM Recipes")
-    fun getAll() : List<RecipeEntity>
+    suspend fun getAll() : LiveData<List<RecipeEntity>>
 }

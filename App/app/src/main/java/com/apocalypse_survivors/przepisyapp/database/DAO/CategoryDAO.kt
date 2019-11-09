@@ -1,20 +1,24 @@
 package com.apocalypse_survivors.przepisyapp.database.DAO
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import com.apocalypse_survivors.przepisyapp.database.Entities.CategoryEntity
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import com.apocalypse_survivors.przepisyapp.database.entities.CategoryEntity
 
 @Dao
 interface CategoryDAO {
 
     @Insert
-    fun save(category : CategoryEntity)
+    suspend fun insert(category : CategoryEntity)
+
+    @Insert
+    fun insert(categoryList : List<CategoryEntity>)
+
+    @Update
+    suspend fun update(category : CategoryEntity)
 
     @Delete
-    fun delete(category: CategoryEntity)
+    suspend fun delete(category: CategoryEntity)
 
     @Query("SELECT * FROM Categories")
-    fun getAll() : List<CategoryEntity>
+    suspend fun getAll() : LiveData<List<CategoryEntity>>
 }

@@ -1,19 +1,20 @@
 package com.apocalypse_survivors.przepisyapp.database.DAO
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import com.apocalypse_survivors.przepisyapp.database.Entities.StepEntity
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import com.apocalypse_survivors.przepisyapp.database.entities.StepEntity
 
 @Dao
 interface StepDAO {
     @Insert
-    fun save(category : StepEntity)
+    suspend fun insert(step : StepEntity)
+
+    @Update
+    suspend fun update(step : StepEntity)
 
     @Delete
-    fun delete(category: StepEntity)
+    suspend fun delete(step: StepEntity)
 
     @Query("SELECT * FROM Steps")
-    fun getAll() : List<StepEntity>
+    suspend fun getAll() : LiveData<List<StepEntity>>
 }
