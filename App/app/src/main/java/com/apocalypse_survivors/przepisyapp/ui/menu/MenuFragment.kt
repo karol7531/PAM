@@ -34,16 +34,21 @@ class MenuFragment : Fragment() {
         val recipeAdapter = RecipeAdapter()
         recyclerView.adapter = recipeAdapter
 
+        recipeAdapter.setOnItemCLickListener(object : RecipeAdapter.OnItemClickListener{
+            override fun onItemClick(recipe: RecipeEntity) {
+                //TODO: pass arguments
+                //WARN: works only on menu fragment
+                Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(R.id.action_nav_menu_to_nav_recipe)
+            }
+
+        })
+
         //TODO: take category name from action in navigation component
-        //WARN: hardcoded value
 //        viewModel.getAllFromCategory("DESSERTS").observe(this,
 //            Observer<List<RecipeEntity>> { recipes -> recipeAdapter.setRecipes(recipes!!) })
 
         viewModel.getAll().observe(this,
             Observer<List<RecipeEntity>> { recipes -> recipeAdapter.setRecipes(recipes!!) })
-
-//        viewModel.getAllCategories().observe(this,
-//            Observer<List<CategoryEntity>> { recipes -> recipeAdapter.setRecipes(recipes!!) })
 
         fab.setOnClickListener {
             Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(R.id.action_nav_menu_to_nav_modify)
