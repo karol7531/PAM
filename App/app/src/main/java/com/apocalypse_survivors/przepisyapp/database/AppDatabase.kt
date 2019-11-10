@@ -7,10 +7,12 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.apocalypse_survivors.przepisyapp.database.DAO.*
 import com.apocalypse_survivors.przepisyapp.database.entities.*
-import com.apocalypse_survivors.przepisyapp.recipe.CategoryType
-import com.apocalypse_survivors.przepisyapp.recipe.MeasureType
+import com.apocalypse_survivors.przepisyapp.database.DAO.CategoryType
+import com.apocalypse_survivors.przepisyapp.database.DAO.MeasureType
 import java.util.concurrent.Executors
 
+//useful links:
+// https://en.proft.me/2019/09/27/android-room-kotlin-coroutines-viewmodel-livedata/
 @Database(entities = [CategoryEntity::class, IngredientEntity::class, MeasureEntity::class, RecipeEntity::class, StepEntity::class],
     version = 1)
 abstract class AppDatabase : RoomDatabase() {
@@ -64,7 +66,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         val CategoriesData = CategoryType.values()
             .filter { it.isMainCategory }
-            .map { CategoryEntity(it.name, null) }
+            .map { CategoryEntity(it.name, "") }
 
         val MeasuresData = MeasureType.values()
             .map { MeasureEntity(it.name) }

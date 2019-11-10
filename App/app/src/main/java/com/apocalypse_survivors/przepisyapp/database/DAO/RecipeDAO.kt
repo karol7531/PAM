@@ -16,5 +16,8 @@ interface RecipeDAO {
     suspend fun delete(recipe: RecipeEntity)
 
     @Query("SELECT * FROM Recipes")
-    suspend fun getAll() : LiveData<List<RecipeEntity>>
+    fun getAll() : LiveData<List<RecipeEntity>>
+
+    @Query("SELECT * FROM Recipes WHERE category_id = :categoryName")
+    fun getAllFromCategory(categoryName : String) : LiveData<List<RecipeEntity>>
 }

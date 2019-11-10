@@ -1,4 +1,4 @@
-package com.apocalypse_survivors.przepisyapp.recipe
+package com.apocalypse_survivors.przepisyapp.database.DAO
 
 enum class CategoryType(val isMainCategory: Boolean) {
     SNACKS(true),

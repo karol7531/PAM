@@ -16,5 +16,5 @@ interface StepDAO {
     suspend fun delete(step: StepEntity)
 
     @Query("SELECT * FROM Steps")
-    suspend fun getAll() : LiveData<List<StepEntity>>
+    fun getAll() : LiveData<List<StepEntity>>
 }

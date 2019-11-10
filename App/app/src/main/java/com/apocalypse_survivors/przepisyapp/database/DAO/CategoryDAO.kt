@@ -20,5 +20,5 @@ interface CategoryDAO {
     suspend fun delete(category: CategoryEntity)
 
     @Query("SELECT * FROM Categories")
-    suspend fun getAll() : LiveData<List<CategoryEntity>>
+    fun getAll() : LiveData<List<CategoryEntity>>
 }

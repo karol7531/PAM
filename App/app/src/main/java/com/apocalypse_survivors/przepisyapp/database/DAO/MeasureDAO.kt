@@ -20,5 +20,5 @@ interface MeasureDAO {
     suspend fun delete(measure: MeasureEntity)
 
     @Query("SELECT * FROM Measures")
-    suspend fun getAll() : LiveData<List<MeasureEntity>>
+    fun getAll() : LiveData<List<MeasureEntity>>
 }

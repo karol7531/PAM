@@ -1,6 +1,7 @@
 package com.apocalypse_survivors.przepisyapp.repositories
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import com.apocalypse_survivors.przepisyapp.database.AppDatabase
 import com.apocalypse_survivors.przepisyapp.database.DAO.RecipeDAO
 import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
@@ -24,6 +25,10 @@ class RecipeRepo(application: Application) {
 
     suspend fun delete(recipe: RecipeEntity){
 
+    }
+
+    fun getAllFromCategory(categoryName: String): LiveData<List<RecipeEntity>> {
+        return recipeDAO.getAllFromCategory(categoryName)
     }
 
 

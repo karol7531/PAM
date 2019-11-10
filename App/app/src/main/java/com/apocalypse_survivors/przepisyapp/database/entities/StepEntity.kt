@@ -13,7 +13,7 @@ import androidx.room.PrimaryKey
         )])
 data class StepEntity (
 
-    val rec_id : Int,
+    val recipe_id : Int,
 
     val number : Int,
 

@@ -17,5 +17,5 @@ interface IngredientDAO {
     suspend fun delete(ingredient: IngredientEntity)
 
     @Query("SELECT * FROM Ingredients")
-    suspend fun getAll() : LiveData<List<IngredientEntity>>
+    fun getAll() : LiveData<List<IngredientEntity>>
 }

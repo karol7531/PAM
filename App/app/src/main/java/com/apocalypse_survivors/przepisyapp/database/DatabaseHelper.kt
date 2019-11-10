@@ -5,8 +5,8 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
-import com.apocalypse_survivors.przepisyapp.recipe.CategoryType
-import com.apocalypse_survivors.przepisyapp.recipe.MeasureType
+import com.apocalypse_survivors.przepisyapp.database.DAO.CategoryType
+import com.apocalypse_survivors.przepisyapp.database.DAO.MeasureType
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -123,7 +123,7 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nul
     }
 
     //Ingredients
-    fun insertIngredients(recipeId: Int, amount: Int, product: String, measure:MeasureType): Long{
+    fun insertIngredients(recipeId: Int, amount: Int, product: String, measure: MeasureType): Long{
         val db = this.writableDatabase
         val values = ContentValues().apply {
             put(ReaderContract.Ingredients.COL_RECIPE, recipeId)
@@ -134,7 +134,7 @@ class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, DB_NAME, nul
         return db.insert(ReaderContract.Ingredients.TABLE_NAME, null, values)
     }
 
-    fun updateIngredients(id: Long, recipeId: Int, amount: Int, product: String, measure:MeasureType): Int{
+    fun updateIngredients(id: Long, recipeId: Int, amount: Int, product: String, measure: MeasureType): Int{
         val db = this.writableDatabase
         val values = ContentValues().apply {
             put(ReaderContract.Ingredients.COL_RECIPE, recipeId)

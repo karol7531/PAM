@@ -19,9 +19,9 @@ import androidx.room.PrimaryKey
         ])
 data class RecipeEntity (
 
-    val category_id : Int,
+    val category_id : String,
 
-    val subcategory_id : Int,
+    val subcategory_id : String,
 
     val name : String,
 
