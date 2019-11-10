@@ -8,16 +8,16 @@ import com.apocalypse_survivors.przepisyapp.database.entities.MeasureEntity
 interface MeasureDAO {
 
     @Insert
-    suspend fun insert(measure : MeasureEntity)
+    fun insert(measure : MeasureEntity)
 
     @Insert
     fun insert(measureList : List<MeasureEntity>)
 
-    @Update
-    suspend fun update(measure : MeasureEntity)
-
-    @Delete
-    suspend fun delete(measure: MeasureEntity)
+//    @Update
+//    fun update(measure : MeasureEntity)
+//
+//    @Delete
+//    fun delete(measure: MeasureEntity)
 
     @Query("SELECT * FROM Measures")
     fun getAll() : LiveData<List<MeasureEntity>>

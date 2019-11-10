@@ -15,17 +15,30 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_add_photo" />
 
-    <TextView
+    <EditText
+        android:id="@+id/modify_text_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modify_imageButton_add" />
+
+    <EditText
         android:id="@+id/modify_text_ingredients"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/ingredients"
+        android:hint="@string/ingredients"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/modify_imageButton_add" />
+        app:layout_constraintTop_toBottomOf="@+id/modify_text_name" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/modify_fab_done"

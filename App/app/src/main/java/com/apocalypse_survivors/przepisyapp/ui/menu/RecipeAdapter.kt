@@ -1,11 +1,13 @@
 package com.apocalypse_survivors.przepisyapp.ui.menu
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.apocalypse_survivors.przepisyapp.R
+import com.apocalypse_survivors.przepisyapp.database.entities.CategoryEntity
 import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
 
 class RecipeAdapter : RecyclerView.Adapter<RecipeHolder>() {
@@ -27,6 +29,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeHolder>() {
     }
 
     fun setRecipes(recipes : List<RecipeEntity>){
+        Log.i("RecipeAdapter", "DataSetChanged: item_len = ${recipes.size}")
         this.recipes = recipes
         //not the best way to notify
         notifyDataSetChanged()

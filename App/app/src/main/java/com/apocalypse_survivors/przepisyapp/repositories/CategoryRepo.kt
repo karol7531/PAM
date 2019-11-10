@@ -1,6 +1,7 @@
 package com.apocalypse_survivors.przepisyapp.repositories
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import com.apocalypse_survivors.przepisyapp.database.AppDatabase
 import com.apocalypse_survivors.przepisyapp.database.DAO.CategoryDAO
 import com.apocalypse_survivors.przepisyapp.database.entities.CategoryEntity
@@ -14,16 +15,19 @@ class CategoryRepo(application: Application){
         categoryDAO = database.categoryDAO()
     }
 
-    suspend fun insert(recipe: CategoryEntity){
+    fun insert(recipe: CategoryEntity){
         categoryDAO.insert(recipe)
     }
 
-    suspend fun update(recipe: CategoryEntity){
+//    fun update(recipe: CategoryEntity){
+//
+//    }
+//
+//    fun delete(recipe: CategoryEntity){
+//
+//    }
 
+    fun getAll(): LiveData<List<CategoryEntity>> {
+        return categoryDAO.getAll()
     }
-
-    suspend fun delete(recipe: CategoryEntity){
-
-    }
-
 }

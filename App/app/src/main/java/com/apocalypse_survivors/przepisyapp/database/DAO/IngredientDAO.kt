@@ -10,11 +10,11 @@ interface IngredientDAO {
     @Insert
     suspend fun insert(ingredient : IngredientEntity)
 
-    @Update
-    suspend fun update(ingredient : IngredientEntity)
-
-    @Delete
-    suspend fun delete(ingredient: IngredientEntity)
+//    @Update
+//    fun update(ingredient : IngredientEntity)
+//
+//    @Delete
+//    fun delete(ingredient: IngredientEntity)
 
     @Query("SELECT * FROM Ingredients")
     fun getAll() : LiveData<List<IngredientEntity>>

@@ -11,18 +11,23 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.apocalypse_survivors.przepisyapp.R
+import com.apocalypse_survivors.przepisyapp.database.entities.CategoryEntity
 import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MenuFragment : Fragment() {
 
-    private lateinit var homeViewModel: MenuViewModel
+    private lateinit var viewModel: MenuViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var fab: FloatingActionButton
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        homeViewModel = ViewModelProviders.of(this).get(MenuViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(MenuViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_menu, container, false)
 
-        val recyclerView : RecyclerView = root.findViewById(R.id.menu_recycler_view)
+        fab = root.findViewById(R.id.menu_fab_modify)
+        recyclerView  = root.findViewById(R.id.menu_recycler_view)
+
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
 
@@ -31,10 +36,15 @@ class MenuFragment : Fragment() {
 
         //TODO: take category name from action in navigation component
         //WARN: hardcoded value
-        homeViewModel.getAllFromCategory("DESSERTS").observe(this,
+//        viewModel.getAllFromCategory("DESSERTS").observe(this,
+//            Observer<List<RecipeEntity>> { recipes -> recipeAdapter.setRecipes(recipes!!) })
+
+        viewModel.getAll().observe(this,
             Observer<List<RecipeEntity>> { recipes -> recipeAdapter.setRecipes(recipes!!) })
 
-        val fab : FloatingActionButton = root.findViewById(R.id.menu_fab_modify)
+//        viewModel.getAllCategories().observe(this,
+//            Observer<List<CategoryEntity>> { recipes -> recipeAdapter.setRecipes(recipes!!) })
+
         fab.setOnClickListener {
             Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(R.id.action_nav_menu_to_nav_modify)
         }

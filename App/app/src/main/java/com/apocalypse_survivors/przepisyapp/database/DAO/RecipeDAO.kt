@@ -7,13 +7,13 @@ import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
 @Dao
 interface RecipeDAO {
     @Insert
-    suspend fun insert(recipe : RecipeEntity)
+    fun insert(recipe : RecipeEntity)
 
-    @Update
-    suspend fun update(recipe : RecipeEntity)
-
-    @Delete
-    suspend fun delete(recipe: RecipeEntity)
+//    @Update
+//    fun update(recipe : RecipeEntity)
+//
+//    @Delete
+//    fun delete(recipe: RecipeEntity)
 
     @Query("SELECT * FROM Recipes")
     fun getAll() : LiveData<List<RecipeEntity>>

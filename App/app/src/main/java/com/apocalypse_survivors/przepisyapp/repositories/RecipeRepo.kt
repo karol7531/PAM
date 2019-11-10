@@ -9,22 +9,26 @@ import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
 class RecipeRepo(application: Application) {
 
     private var database: AppDatabase = AppDatabase.getInstance(application)
-    private lateinit var recipeDAO: RecipeDAO
+    private var recipeDAO: RecipeDAO
 
     init {
         recipeDAO = database.recipeDAO()
     }
 
-    suspend fun insert(recipe: RecipeEntity){
+    fun insert(recipe: RecipeEntity){
         recipeDAO.insert(recipe)
     }
 
-    suspend fun update(recipe: RecipeEntity){
+//    fun update(recipe: RecipeEntity){
+//
+//    }
+//
+//    fun delete(recipe: RecipeEntity){
+//
+//    }
 
-    }
-
-    suspend fun delete(recipe: RecipeEntity){
-
+    fun getAll(): LiveData<List<RecipeEntity>> {
+        return recipeDAO.getAll()
     }
 
     fun getAllFromCategory(categoryName: String): LiveData<List<RecipeEntity>> {

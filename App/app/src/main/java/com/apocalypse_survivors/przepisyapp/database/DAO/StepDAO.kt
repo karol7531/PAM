@@ -7,13 +7,13 @@ import com.apocalypse_survivors.przepisyapp.database.entities.StepEntity
 @Dao
 interface StepDAO {
     @Insert
-    suspend fun insert(step : StepEntity)
+    fun insert(step : StepEntity)
 
-    @Update
-    suspend fun update(step : StepEntity)
-
-    @Delete
-    suspend fun delete(step: StepEntity)
+//    @Update
+//    fun update(step : StepEntity)
+//
+//    @Delete
+//    fun delete(step: StepEntity)
 
     @Query("SELECT * FROM Steps")
     fun getAll() : LiveData<List<StepEntity>>

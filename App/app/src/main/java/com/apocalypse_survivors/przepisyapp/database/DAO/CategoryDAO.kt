@@ -8,16 +8,16 @@ import com.apocalypse_survivors.przepisyapp.database.entities.CategoryEntity
 interface CategoryDAO {
 
     @Insert
-    suspend fun insert(category : CategoryEntity)
+    fun insert(category : CategoryEntity)
 
     @Insert
     fun insert(categoryList : List<CategoryEntity>)
 
-    @Update
-    suspend fun update(category : CategoryEntity)
-
-    @Delete
-    suspend fun delete(category: CategoryEntity)
+//    @Update
+//    fun update(category : CategoryEntity)
+//
+//    @Delete
+//    fun delete(category: CategoryEntity)
 
     @Query("SELECT * FROM Categories")
     fun getAll() : LiveData<List<CategoryEntity>>
