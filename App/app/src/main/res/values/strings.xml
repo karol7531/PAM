@@ -23,4 +23,27 @@
     <string name="save_success">Saved successfully</string>
     <string name="unspecified_field">UNSPECIFIED</string>
     <string name="menu">Menu</string>
+
+    <string-array name="categories">
+        <item>Snacks</item>
+        <item>Soups</item>
+        <item>Meat dishes</item>
+        <item>Grilled</item>
+        <item>Fishes and seafood</item>
+        <item>Cakes</item>
+        <item>Desserts</item>
+        <item>Baking</item>
+        <item>Children dishes</item>
+        <item>Vegetarian</item>
+        <item>Pasta</item>
+        <item>Groats and rice</item>
+        <item>Pancakes, omelets, tortillas</item>
+        <item>Noodles, pies, dumplings</item>
+        <item>Casseroles, pizzas, tarts, toasts</item>
+        <item>Salads</item>
+        <item>Preserves and pickles</item>
+        <item>Sauces and pastes</item>
+        <item>Beverages</item>
+
+    </string-array>
 </resources>

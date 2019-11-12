@@ -5,8 +5,8 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
-import com.apocalypse_survivors.przepisyapp.database.DAO.CategoryType
-import com.apocalypse_survivors.przepisyapp.database.DAO.MeasureType
+import com.apocalypse_survivors.przepisyapp.database.entities.CategoryType
+import com.apocalypse_survivors.przepisyapp.database.entities.MeasureType
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -1,4 +1,4 @@
-package com.apocalypse_survivors.przepisyapp.database.DAO
+package com.apocalypse_survivors.przepisyapp.database.entities
 
 //to convert check:  http://www.przyprawowy.pl/rozmaitosci/miary-i-wagi-w-kuchni.html
 enum class MeasureType {

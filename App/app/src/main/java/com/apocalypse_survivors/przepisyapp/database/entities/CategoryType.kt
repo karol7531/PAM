@@ -1,4 +1,4 @@
-package com.apocalypse_survivors.przepisyapp.database.DAO
+package com.apocalypse_survivors.przepisyapp.database.entities
 
 enum class CategoryType(val isMainCategory: Boolean) {
     SNACKS(true),
@@ -41,7 +41,7 @@ enum class CategoryType(val isMainCategory: Boolean) {
     GROATS_RICE(true),
         GROATS(false),
         RICE(false),
-    PANCAKES_OMLETS_TORTILLAS(true),
+    PANCAKES_OMELETS_TORTILLAS(true),
         PANCAKES(false),
         OMLETS(false),
         TORTILLAS(false),

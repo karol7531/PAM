@@ -7,8 +7,8 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.apocalypse_survivors.przepisyapp.database.DAO.*
 import com.apocalypse_survivors.przepisyapp.database.entities.*
-import com.apocalypse_survivors.przepisyapp.database.DAO.CategoryType
-import com.apocalypse_survivors.przepisyapp.database.DAO.MeasureType
+import com.apocalypse_survivors.przepisyapp.database.entities.CategoryType
+import com.apocalypse_survivors.przepisyapp.database.entities.MeasureType
 import java.util.concurrent.Executors
 
 //useful links:
