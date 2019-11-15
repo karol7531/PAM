@@ -1,22 +1,34 @@
 package com.apocalypse_survivors.przepisyapp.ui.modify
 
+import android.R
 import android.app.Application
+import android.content.Context
+import android.widget.ArrayAdapter
 import androidx.lifecycle.AndroidViewModel
 import com.apocalypse_survivors.przepisyapp.common.DateTimeConverter
+import com.apocalypse_survivors.przepisyapp.database.entities.CategoryType
 import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
-import com.apocalypse_survivors.przepisyapp.repositories.CategoryRepo
+import com.apocalypse_survivors.przepisyapp.findCategory
 import com.apocalypse_survivors.przepisyapp.repositories.RecipeRepo
 import java.util.concurrent.Executors
 
 class ModifyViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: RecipeRepo = RecipeRepo(application)
-    private val cat_repo : CategoryRepo = CategoryRepo(application)
 
-    fun saveRecipe(category : String,subcategory : String, name: String, description: String, image : String, time: Int, portion:Int): Boolean {
+    internal lateinit var spinnerCategory: String
+    internal var imagePath : String = ""
+
+    fun saveRecipe(name: String, description: String, time: Int, portion:Int, context: Context): Boolean {
+
+        val dbCategory = findCategory(spinnerCategory, context)
+        if (name.trim().isEmpty() || dbCategory == null){
+            return false
+        }
+
         val created = DateTimeConverter.getDateTime()
-        val recipe = RecipeEntity(category_id = category,subcategory_id = subcategory, name = name, description = description,
-            image = image, time = time, portion = portion, created = created)
+        val recipe = RecipeEntity(category_id = dbCategory.name, subcategory_id = dbCategory.name, name = name, description = description,
+            image = imagePath, time = time, portion = portion, created = created)
 
         insert(recipe)
         return true
@@ -28,17 +40,10 @@ class ModifyViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-//    fun saveCategory(name: String, desc: String){
-//        Executors.newSingleThreadExecutor().execute {
-//            val category = CategoryEntity(name, desc)
-//            cat_repo.insert(category)
-//        }
-//    }
-
-//    fun saveCategory(name: String, desc: String)  = viewModelScope.launch{
-//        val category = CategoryEntity(name, desc)
-//        cat_repo.insert(category)
-//    }
-
-
+    internal fun getSpinnerAdapter(context: Context): ArrayAdapter<String> {
+        val categoryLabels = CategoryType.values()
+            .filter { it.isMainCategory }
+            .map { it.getLabel(context!!) }
+        return ArrayAdapter(context, R.layout.simple_spinner_item, categoryLabels)
+    }
 }

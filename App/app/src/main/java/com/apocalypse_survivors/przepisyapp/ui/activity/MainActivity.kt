@@ -1,4 +1,4 @@
-package com.apocalypse_survivors.przepisyapp
+package com.apocalypse_survivors.przepisyapp.ui.activity
 
 import android.os.Bundle
 import android.util.Log
@@ -11,14 +11,13 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.apocalypse_survivors.przepisyapp.database.entities.CategoryType
+import com.apocalypse_survivors.przepisyapp.OnCategoryChangedListener
+import com.apocalypse_survivors.przepisyapp.R
+import com.apocalypse_survivors.przepisyapp.findCategory
 import com.google.android.material.navigation.NavigationView
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    var categorySelected :CategoryType? = null
-        private set
 
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var drawer: DrawerLayout
@@ -37,15 +36,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //navigation
         setupNavigation()
-
-//        viewModel.populateDB()
-
     }
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        categorySelected = findCategory(item.title.toString(), this)
-        Log.i("MainActivity", "category selected: $categorySelected")
+        viewModel.categorySelected =
+            findCategory(item.title.toString(), this)
+        Log.i("MainActivity", "category selected: ${viewModel.categorySelected}")
         drawer.closeDrawers()
         callOnCategoryChanged()
         //IDEA: change toolbar string
@@ -57,7 +54,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val fragments = navHostFragment?.childFragmentManager?.fragments
         fragments?.forEach {
             if (it != null && it is OnCategoryChangedListener){
-                it.onCategoryChanged(categorySelected!!)
+                it.onCategoryChanged(viewModel.categorySelected!!)
             }
         }
     }
@@ -82,4 +79,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Log.i("MainActivity", "Navigated up")
         return navController.navigateUp(drawerLayout = findViewById(R.id.drawer_layout)) || super.onSupportNavigateUp()
     }
+
+    fun getCategorySelected() = viewModel.categorySelected
 }
