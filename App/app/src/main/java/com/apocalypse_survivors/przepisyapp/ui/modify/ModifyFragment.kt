@@ -15,9 +15,9 @@ import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.apocalypse_survivors.przepisyapp.MainActivity
 import com.apocalypse_survivors.przepisyapp.R
 import com.apocalypse_survivors.przepisyapp.database.entities.CategoryType
+import com.apocalypse_survivors.przepisyapp.findCategory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
@@ -34,7 +34,8 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
     private var imagePath : String = ""
 
     private val IMG_PICK_CODE = 1000
-    private val PERMISSION_CODE = 1001
+    private val PERMISSION_CODE_READ = 1001
+    private val PERMISSION_CODE_WRITE = 1002
 
     //IDEA: get spinnerCategory from menu
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -69,9 +70,14 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
         //image button
         imageButton.setOnClickListener {
             if(ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_DENIED) {
-                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_CODE)
+                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_CODE_READ)
             } else {
-                pickFromGallery()
+//                if(ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_DENIED) {
+//                    requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),PERMISSION_CODE_WRITE)
+//                }
+//                else{
+                    pickFromGallery()
+//                }
             }
         }
 
@@ -87,7 +93,8 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
     }
 
     private fun pickFromGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
+//        val intent = Intent(Intent.ACTION_PICK)
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.type = "image/*"
         startActivityForResult(intent, IMG_PICK_CODE)
     }
@@ -96,19 +103,14 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
     {
         if (resultCode == RESULT_OK) {
             if (requestCode == IMG_PICK_CODE) {
-                val returnUri = intent.data
+                val uri = intent.data
                 //IDEA: Glide
-                val bitmapImage : Bitmap = MediaStore.Images.Media.getBitmap(activity!!.contentResolver, returnUri)
+                val bitmapImage : Bitmap = MediaStore.Images.Media.getBitmap(activity!!.contentResolver, uri)
                 imageButton.setImageBitmap(bitmapImage)
 
-                imagePath = returnUri.path
+                imagePath = uri.toString()
 
                 Log.i("ModifyFragment", "img path: $imagePath")
-                Log.i("ModifyFragment", "uri: ${returnUri.toString()}")
-//                Log.i("ModifyFragment", "uri: ${returnUri)}")
-//                Log.i("ModifyFragment", "inputStream: ${context!!.contentResolver.openInputStream(returnUri)}")
-
-
             }
         }
     }
@@ -117,20 +119,13 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
         val name = nameEdit.text.toString()
         val ingredients = ingredientsEdit.text.toString()
 
-        val dbCategory = findCategory(spinnerCategory)
+        val dbCategory = findCategory(spinnerCategory, context!!)
 
-        if (name.trim().isEmpty() || dbCategory.isNullOrEmpty()){
+        if (name.trim().isEmpty() || dbCategory == null){
             return false
         }
 
-        return viewModel.saveRecipe(dbCategory, dbCategory, name, ingredients, imagePath, 10, 2)
-    }
-
-    private fun findCategory(spinnerCategory: String): String {
-        CategoryType.values().forEach {
-            if(it.isMainCategory && it.getLabel(context!!) == spinnerCategory)
-                return it.name
-        }
-        return ""
+        //TODO: add values
+        return viewModel.saveRecipe(dbCategory.name, dbCategory.name, name, ingredients, imagePath, 0, 0)
     }
 }

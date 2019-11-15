@@ -8,15 +8,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.apocalypse_survivors.przepisyapp.R
-import com.apocalypse_survivors.przepisyapp.database.entities.CategoryEntity
 import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
 
-class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeHolder>() {
+
+class RecipeAdapter(private val activity: Activity) : RecyclerView.Adapter<RecipeAdapter.RecipeHolder>() {
 
     private var recipes : List<RecipeEntity> = listOf()
     private lateinit var onItemClickListener: OnItemClickListener
@@ -35,22 +34,12 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeHolder>() {
         holder.nameTextView.text = currentRecipe.name
 
         Log.d("RecipeAdapter", "imgPath: ${currentRecipe.image}")
-//        if (currentRecipe.image.isNotEmpty()){
-////            if (uri.getScheme().equals("content")) {
-////                val iStream = context.getContentResolver().openInputStream(uri)
-////                videoBytes = getBytes(iStream)
-////            } else {
-////                val file = File(uri.getPath())
-////                val fileInputStream = FileInputStream(file)
-////                videoBytes = getBytes(fileInputStream)
-////            }
-//
-//            val imgFile = File(currentRecipe.image)
-//            val imgUri = Uri.fromFile(imgFile)
-//            //IDEA: Glide
-//            val bitmapImage : Bitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver, imgUri)
-//            holder.imageButton.setImageBitmap(bitmapImage)
-//        }
+        if (currentRecipe.image.isNotEmpty()){
+            val imgUri = Uri.parse(currentRecipe.image)
+            //IDEA: Glide
+            val bitmapImage : Bitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver, imgUri)
+            holder.imageButton.setImageBitmap(bitmapImage)
+        }
     }
 
     fun setRecipes(recipes : List<RecipeEntity>){
