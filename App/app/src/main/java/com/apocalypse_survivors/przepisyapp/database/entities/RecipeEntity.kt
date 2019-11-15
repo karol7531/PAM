@@ -21,21 +21,21 @@ import com.apocalypse_survivors.przepisyapp.R
         ])
 class RecipeEntity (
 
-//    val category_id : String,
-//
-//    val subcategory_id : String,
-//
-//    val name : String,
-//
-//    val description : String,
-//
-//    val image : String,
-//
-//    val time : Int,
-//
-//    val portion : Int,
-//
-//    val created : String
+    val category_id : String,
+
+    val subcategory_id : String,
+
+    val name : String,
+
+    val description : String,
+
+    val image : String,
+
+    val time : Int,
+
+    val portion : Int,
+
+    val created : String
 ){
 
 //    constructor() : this("UNSPECIFIED", "", "", "", "", 0, 0, "1970-01-01 00:00:00")
@@ -43,19 +43,19 @@ class RecipeEntity (
     @PrimaryKey(autoGenerate = true)
     var id : Int = 0
 
-    var category_id : String = "UNSPECIFIED"
-
-    var subcategory_id : String = "UNSPECIFIED"
-
-    var name : String = ""
-
-    var description : String = ""
-
-    var image : String= ""
-
-    var time : Int = 0
-
-    var portion : Int = 0
-
-    var created : String = "1970-01-01 00:00:00"
+//    var category_id : String = "UNSPECIFIED"
+//
+//    var subcategory_id : String = "UNSPECIFIED"
+//
+//    var name : String = ""
+//
+//    var description : String = ""
+//
+//    var image : String= ""
+//
+//    var time : Int = 0
+//
+//    var portion : Int = 0
+//
+//    var created : String = "1970-01-01 00:00:00"
 }

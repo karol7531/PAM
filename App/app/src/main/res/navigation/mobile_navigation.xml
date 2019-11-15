@@ -25,29 +25,6 @@
 <!--        tools:layout="@layout/fragment_steps" />-->
 
     <fragment
-        android:id="@+id/nav_desserts"
-        android:name="com.apocalypse_survivors.przepisyapp.ui.menu.MenuFragment"
-        android:label="@string/menu_desserts"
-        tools:layout="@layout/fragment_menu" />
-
-    <fragment
-        android:id="@+id/nav_dishes"
-        android:name="com.apocalypse_survivors.przepisyapp.ui.menu.MenuFragment"
-        android:label="@string/menu_dishes"
-        tools:layout="@layout/fragment_menu" />
-
-    <fragment
-        android:id="@+id/nav_soups"
-        android:name="com.apocalypse_survivors.przepisyapp.ui.menu.MenuFragment"
-        android:label="@string/menu_soups"
-        tools:layout="@layout/fragment_menu" />
-
-    <fragment
-        android:id="@+id/nav_salads"
-        android:name="com.apocalypse_survivors.przepisyapp.ui.menu.MenuFragment"
-        android:label="@string/menu_salads"
-        tools:layout="@layout/fragment_menu" />
-    <fragment
         android:id="@+id/nav_modify"
         android:name="com.apocalypse_survivors.przepisyapp.ui.modify.ModifyFragment"
         android:label="@string/menu_modify"

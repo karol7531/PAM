@@ -29,6 +29,7 @@
 
 
         <ImageView
+            android:id="@+id/recipe_item_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

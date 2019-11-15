@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.apocalypse_survivors.przepisyapp.MainActivity
 import com.apocalypse_survivors.przepisyapp.R
 import com.apocalypse_survivors.przepisyapp.database.entities.CategoryEntity
 import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
@@ -31,7 +32,7 @@ class MenuFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
 
-        val recipeAdapter = RecipeAdapter()
+        val recipeAdapter = RecipeAdapter(activity!!)
         recyclerView.adapter = recipeAdapter
 
         recipeAdapter.setOnItemCLickListener(object : RecipeAdapter.OnItemClickListener{
@@ -43,13 +44,18 @@ class MenuFragment : Fragment() {
 
         })
 
-        //TODO: take category name from action in navigation component
-//        viewModel.getAllFromCategory("DESSERTS").observe(this,
-//            Observer<List<RecipeEntity>> { recipes -> recipeAdapter.setRecipes(recipes!!) })
+        //set items to recycler and observe live data
+        val category = (activity as MainActivity).categorySelected
+        if (category.isNullOrEmpty()){
+            viewModel.getAll().observe(this,
+                Observer<List<RecipeEntity>> { recipes -> recipeAdapter.setRecipes(recipes!!) })
 
-        viewModel.getAll().observe(this,
-            Observer<List<RecipeEntity>> { recipes -> recipeAdapter.setRecipes(recipes!!) })
+        }else{
+            viewModel.getAllFromCategory(category).observe(this,
+                Observer<List<RecipeEntity>> { recipes -> recipeAdapter.setRecipes(recipes!!) })
+        }
 
+        //fab
         fab.setOnClickListener {
             Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(R.id.action_nav_menu_to_nav_modify)
         }

@@ -3,25 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-<!--    <group android:checkableBehavior="single">-->
-<!--        <item-->
-<!--            android:id="@+id/nav_category"-->
-<!--            android:icon="@drawable/ic_square"-->
-<!--            android:title="@string/menu_category" />-->
-<!--        <item-->
-<!--            android:id="@+id/nav_modify"-->
-<!--            android:icon="@drawable/ic_square"-->
-<!--            android:title="@string/menu_modify" />-->
-<!--        <item-->
-<!--            android:id="@+id/nav_recipe"-->
-<!--            android:icon="@drawable/ic_square"-->
-<!--            android:title="@string/menu_product" />-->
-<!--        <item-->
-<!--            android:id="@+id/nav_steps"-->
-<!--            android:icon="@drawable/ic_square"-->
-<!--            android:title="@string/menu_steps" />-->
-<!--    </group>-->
-
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_desserts"
@@ -40,18 +21,5 @@
             android:icon="@drawable/ic_square"
             android:title="@string/menu_salads" />
     </group>
-
-<!--    <item android:title="Communicate">-->
-<!--        <menu>-->
-<!--            <item-->
-<!--                android:id="@+id/nav_share"-->
-<!--                android:icon="@drawable/ic_menu_share"-->
-<!--                android:title="@string/menu_share" />-->
-<!--            <item-->
-<!--                android:id="@+id/nav_send"-->
-<!--                android:icon="@drawable/ic_menu_send"-->
-<!--                android:title="@string/menu_send" />-->
-<!--        </menu>-->
-<!--    </item>-->
 
 </menu>

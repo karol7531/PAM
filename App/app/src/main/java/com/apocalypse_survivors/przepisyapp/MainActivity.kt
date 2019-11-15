@@ -2,6 +2,7 @@ package com.apocalypse_survivors.przepisyapp
 
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -12,9 +13,12 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
+    var categorySelected :String? = null
+        private set
+
+    private lateinit var drawer: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,18 +28,27 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         //drawer
-        setupDrawer()
-    }
-
-    private fun setupDrawer() {
-        //drawer
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        drawer = findViewById(R.id.drawer_layout)
 
         //navigation
+        setupNavigation()
+    }
+
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        categorySelected = item.title.toString()
+        Log.i("MainActivity", "category selected: $categorySelected")
+        drawer.closeDrawers()
+        //IDEA: change toolbar string
+        return true
+    }
+
+    private fun setupNavigation(){
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
-        setupActionBarWithNavController(navController, drawerLayout)
+        setupActionBarWithNavController(navController, drawer)
+        navView.setNavigationItemSelectedListener(this)
         Log.d("MainActivity", "Navigation setted up")
     }
 
