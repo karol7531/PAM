@@ -18,6 +18,8 @@ import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
 import com.apocalypse_survivors.przepisyapp.ui.activity.MainActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
+
+
 class MenuFragment : Fragment(), OnCategoryChangedListener {
 
     private lateinit var viewModel: MenuViewModel
@@ -26,6 +28,7 @@ class MenuFragment : Fragment(), OnCategoryChangedListener {
     private lateinit var fab: FloatingActionButton
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
+        Log.i("MenuFragment", "onCreateView")
         viewModel = ViewModelProviders.of(this).get(MenuViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_menu, container, false)
 
@@ -39,7 +42,8 @@ class MenuFragment : Fragment(), OnCategoryChangedListener {
         recyclerView.adapter = recipeAdapter
 
         recipeAdapter.setOnItemCLickListener(object : RecipeAdapter.OnItemClickListener{
-            override fun onItemClick(recipe: RecipeEntity) {
+            override fun onItemClick(recipe: RecipeEntity, position: Int) {
+                viewModel.selectedRecipePosition = position
                 val selectAction = MenuFragmentDirections.selectAction()
                 selectAction.setRecipeId(recipe.id)
                 Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(selectAction)
@@ -56,16 +60,27 @@ class MenuFragment : Fragment(), OnCategoryChangedListener {
         return root
     }
 
+    private fun scrollRecycler(){
+        Log.i("MenuFragment", "scroll to position: ${viewModel.selectedRecipePosition}")
+        recyclerView.smoothScrollToPosition(viewModel.selectedRecipePosition)
+    }
+
     private fun setupData() {
         //set items to recycler and observe live data
         viewModel.categoryType = (activity as MainActivity).getCategorySelected()
         if (viewModel.categoryType == null) {
             viewModel.getAll().observe(this,
-                Observer<List<RecipeEntity>> { recipes -> recipeAdapter.setRecipes(recipes!!) })
+                Observer<List<RecipeEntity>> {
+                        recipes -> recipeAdapter.setRecipes(recipes!!)
+                    scrollRecycler()
+                })
 
         } else {
             viewModel.getAllFromCategory(viewModel.categoryType!!.name).observe(this,
-                Observer<List<RecipeEntity>> { recipes -> recipeAdapter.setRecipes(recipes!!) })
+                Observer<List<RecipeEntity>> {
+                        recipes -> recipeAdapter.setRecipes(recipes!!)
+                    scrollRecycler()
+                })
         }
     }
 

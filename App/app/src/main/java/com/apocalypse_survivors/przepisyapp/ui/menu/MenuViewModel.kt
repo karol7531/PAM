@@ -12,6 +12,7 @@ class MenuViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: RecipeRepo = RecipeRepo(application)
     internal var categoryType: CategoryType? = null
+    internal var selectedRecipePosition: Int = 0
 
 //    private fun delete(recipe: RecipeEntity) = viewModelScope.launch {
 //        repository.delete(recipe)

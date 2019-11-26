@@ -1,9 +1,7 @@
 package com.apocalypse_survivors.przepisyapp.ui.recipe
 
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +15,7 @@ import androidx.navigation.Navigation
 import com.apocalypse_survivors.przepisyapp.R
 import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
 import com.apocalypse_survivors.przepisyapp.database.entities.StepEntity
+import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 //TODO: toolbar desc
@@ -61,10 +60,10 @@ class RecipeFragment : Fragment() {
         // set image
         try {
             val imgUri = Uri.parse(viewModel.recipe.image)
-            //IDEA: Glide
-            val bitmapImage: Bitmap =
-                MediaStore.Images.Media.getBitmap(activity?.contentResolver, imgUri)
-            image.setImageBitmap(bitmapImage)
+            Glide
+                .with(context!!)
+                .load(imgUri)
+                .into(image)
         } catch (e: Exception) {
             Log.w("RecipeAdapter", "image not found: ${viewModel.recipe.image}")
         }

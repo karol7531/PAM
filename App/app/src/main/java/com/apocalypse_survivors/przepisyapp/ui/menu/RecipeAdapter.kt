@@ -1,9 +1,7 @@
 package com.apocalypse_survivors.przepisyapp.ui.menu
 
 import android.app.Activity
-import android.graphics.Bitmap
 import android.net.Uri
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +11,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.apocalypse_survivors.przepisyapp.R
 import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
+import com.bumptech.glide.Glide
+
+
 
 
 class RecipeAdapter(private val activity: Activity) : RecyclerView.Adapter<RecipeAdapter.RecipeHolder>() {
@@ -33,20 +34,32 @@ class RecipeAdapter(private val activity: Activity) : RecyclerView.Adapter<Recip
         var currentRecipe  = recipes[position]
         holder.nameTextView.text = currentRecipe.name
 
+//        holder.imageButton.setImageDrawable(R.drawable.ic_fast_food)
+
         Log.d("RecipeAdapter", "imgPath: ${currentRecipe.image}")
         if (currentRecipe.image.isNotEmpty()){
             try {
                 val imgUri = Uri.parse(currentRecipe.image)
-                //IDEA: Glide
-                val bitmapImage : Bitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver, imgUri)
-                holder.imageButton.setImageBitmap(bitmapImage)
+                Glide
+                    .with(activity)
+                    .load(imgUri)
+                    .into(holder.imageButton)
             } catch (e: NullPointerException) {
                 Log.w("RecipeAdapter", "image not found: ${currentRecipe.image}")
+                Glide
+                    .with(activity)
+                    .load(R.drawable.ic_fast_food)
+                    .into(holder.imageButton)
             }
+        }else{
+            Glide
+                .with(activity)
+                .load(R.drawable.ic_fast_food)
+                .into(holder.imageButton)
         }
     }
 
-    fun setRecipes(recipes : List<RecipeEntity>){
+    internal fun setRecipes(recipes : List<RecipeEntity>){
         Log.i("RecipeAdapter", "DataSetChanged: item_len = ${recipes.size}")
         this.recipes = recipes
         //not the best way to notify
@@ -57,7 +70,7 @@ class RecipeAdapter(private val activity: Activity) : RecyclerView.Adapter<Recip
         val f = view.setOnClickListener {
             if (adapterPosition != RecyclerView.NO_POSITION){
                 val selectedRecipe = recipes[adapterPosition]
-                onItemClickListener.onItemClick(selectedRecipe)
+                onItemClickListener.onItemClick(selectedRecipe, adapterPosition)
             }
         }
         val nameTextView: TextView = view.findViewById(R.id.recipe_item_name)
@@ -65,7 +78,7 @@ class RecipeAdapter(private val activity: Activity) : RecyclerView.Adapter<Recip
     }
 
     interface OnItemClickListener{
-        fun onItemClick(recipe: RecipeEntity)
+        fun onItemClick(recipe: RecipeEntity, position: Int)
     }
 
     fun setOnItemCLickListener(listener: OnItemClickListener){
