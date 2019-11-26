@@ -34,26 +34,23 @@ class RecipeFragment : Fragment() {
         fab = root.findViewById(R.id.recipe_fab_play)
         desc = root.findViewById(R.id.recipe_descripton)
 
-        //fab
-        fab.setOnClickListener {
-            Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(R.id.steps_action)
-        }
-
-        return root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d("RecipeFragment", "onViewCreated()")
-        super.onViewCreated(view, savedInstanceState)
-
-        //IDEA: in onCreateView
-        //get recipe
         arguments?.let {
             val args = RecipeFragmentArgs.fromBundle(it)
             viewModel.recipeId = args.recipeId
         }
 
         setupData()
+
+        //fab
+        fab.setOnClickListener {
+            val stepsAction = RecipeFragmentDirections.stepsAction(arrayOf())
+            stepsAction.setSteps(viewModel.steps.map {
+                    step -> "${step.number}. ${step.description}"
+            }.toTypedArray())
+            Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(stepsAction)
+        }
+
+        return root
     }
 
     private fun setValues() {
