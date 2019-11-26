@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var drawer: DrawerLayout
+    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
 
         //toolbar
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         //drawer
@@ -45,8 +46,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Log.i("MainActivity", "category selected: ${viewModel.categorySelected}")
         drawer.closeDrawers()
         callOnCategoryChanged()
-        //IDEA: change toolbar string
+        setToolbarTitle()
         return true
+    }
+
+    private fun setToolbarTitle() {
+        if (viewModel.categorySelected != null) {
+            supportActionBar?.title = viewModel.categorySelected?.getLabel(this)
+        }
     }
 
     private fun callOnCategoryChanged() {
@@ -77,7 +84,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         Log.i("MainActivity", "Navigated up")
-        return navController.navigateUp(drawerLayout = findViewById(R.id.drawer_layout)) || super.onSupportNavigateUp()
+        val toRet = navController.navigateUp(drawerLayout = findViewById(R.id.drawer_layout)) || super.onSupportNavigateUp()
+        setToolbarTitle()
+        return toRet
     }
 
     fun getCategorySelected() = viewModel.categorySelected

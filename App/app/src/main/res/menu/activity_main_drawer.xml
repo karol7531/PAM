@@ -9,10 +9,6 @@
             android:icon="@drawable/ic_square"
             android:title="@string/menu_desserts" />
         <item
-            android:id="@+id/nav_dishes"
-            android:icon="@drawable/ic_square"
-            android:title="@string/menu_dishes" />
-        <item
             android:id="@+id/nav_soups"
             android:icon="@drawable/ic_square"
             android:title="@string/menu_soups" />

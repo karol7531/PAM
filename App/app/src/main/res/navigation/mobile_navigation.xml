@@ -14,7 +14,7 @@
             android:id="@+id/action_nav_menu_to_nav_modify"
             app:destination="@id/nav_modify" />
         <action
-            android:id="@+id/action_nav_menu_to_nav_recipe"
+            android:id="@+id/select_action"
             app:destination="@id/nav_recipe" />
     </fragment>
 
@@ -33,5 +33,10 @@
         android:id="@+id/nav_recipe"
         android:name="com.apocalypse_survivors.przepisyapp.ui.recipe.RecipeFragment"
         android:label="@string/menu_recipe"
-        tools:layout="@layout/fragment_recipe"/>
+        tools:layout="@layout/fragment_recipe">
+        <argument
+            android:name="recipeId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>

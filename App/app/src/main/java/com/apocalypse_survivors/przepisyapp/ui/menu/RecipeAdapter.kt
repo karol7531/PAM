@@ -35,10 +35,14 @@ class RecipeAdapter(private val activity: Activity) : RecyclerView.Adapter<Recip
 
         Log.d("RecipeAdapter", "imgPath: ${currentRecipe.image}")
         if (currentRecipe.image.isNotEmpty()){
-            val imgUri = Uri.parse(currentRecipe.image)
-            //IDEA: Glide
-            val bitmapImage : Bitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver, imgUri)
-            holder.imageButton.setImageBitmap(bitmapImage)
+            try {
+                val imgUri = Uri.parse(currentRecipe.image)
+                //IDEA: Glide
+                val bitmapImage : Bitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver, imgUri)
+                holder.imageButton.setImageBitmap(bitmapImage)
+            } catch (e: NullPointerException) {
+                Log.w("RecipeAdapter", "image not found: ${currentRecipe.image}")
+            }
         }
     }
 

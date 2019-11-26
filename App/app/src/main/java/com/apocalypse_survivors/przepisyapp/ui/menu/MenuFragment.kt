@@ -40,8 +40,9 @@ class MenuFragment : Fragment(), OnCategoryChangedListener {
 
         recipeAdapter.setOnItemCLickListener(object : RecipeAdapter.OnItemClickListener{
             override fun onItemClick(recipe: RecipeEntity) {
-                //TODO: pass arguments
-                Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(R.id.action_nav_menu_to_nav_recipe)
+                val selectAction = MenuFragmentDirections.selectAction()
+                selectAction.setRecipeId(recipe.id)
+                Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(selectAction)
             }
         })
 

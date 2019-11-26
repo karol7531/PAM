@@ -87,8 +87,7 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
         startActivityForResult(intent, IMG_PICK_CODE)
     }
 
-    override fun onActivityResult(requestCode:Int, resultCode: Int, intent: Intent)
-    {
+    override fun onActivityResult(requestCode:Int, resultCode: Int, intent: Intent) {
         if (resultCode == RESULT_OK) {
             if (requestCode == IMG_PICK_CODE) {
                 val uri = intent.data
