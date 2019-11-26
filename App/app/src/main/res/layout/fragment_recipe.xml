@@ -13,10 +13,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_fast_food" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/recipe_fab_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/recipe_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_image"
+        app:srcCompat="@drawable/ic_play" />
+
     <ScrollView
         android:id="@+id/recipe_scroll"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -28,7 +39,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="80dp"
             android:orientation="vertical">
 
             <TextView
@@ -42,25 +52,6 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/recipe_ingredients_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/ingredients"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/recipe_steps_button"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/recipe_steps_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/steps"
-        app:layout_constraintBottom_toBottomOf="@+id/recipe_ingredients_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recipe_ingredients_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

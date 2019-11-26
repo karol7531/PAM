@@ -11,18 +11,18 @@
         android:label="@string/menu"
         tools:layout="@layout/fragment_menu" >
         <action
-            android:id="@+id/action_nav_menu_to_nav_modify"
+            android:id="@+id/add_action"
             app:destination="@id/nav_modify" />
         <action
             android:id="@+id/select_action"
             app:destination="@id/nav_recipe" />
     </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/nav_steps"-->
-<!--        android:name="com.apocalypse_survivors.przepisyapp.ui.steps.StepsFragment"-->
-<!--        android:label="@string/menu_steps"-->
-<!--        tools:layout="@layout/fragment_steps" />-->
+    <fragment
+        android:id="@+id/nav_steps"
+        android:name="com.apocalypse_survivors.przepisyapp.ui.steps.StepsFragment"
+        android:label="@string/menu_steps"
+        tools:layout="@layout/fragment_steps" />
 
     <fragment
         android:id="@+id/nav_modify"
@@ -38,5 +38,8 @@
             android:name="recipeId"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/steps_action"
+            app:destination="@id/nav_steps" />
     </fragment>
 </navigation>

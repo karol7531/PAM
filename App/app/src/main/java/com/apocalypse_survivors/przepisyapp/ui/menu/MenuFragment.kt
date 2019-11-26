@@ -50,7 +50,7 @@ class MenuFragment : Fragment(), OnCategoryChangedListener {
 
         //fab
         fab.setOnClickListener {
-            Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(R.id.action_nav_menu_to_nav_modify)
+            Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(R.id.add_action)
         }
 
         return root

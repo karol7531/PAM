@@ -35,7 +35,7 @@ class RecipeRepo(application: Application) {
         return recipeDAO.getAllFromCategory(categoryName)
     }
 
-    fun getRecipe(recipeId: Int): RecipeEntity {
+    fun getRecipe(recipeId: Int): LiveData<RecipeEntity> {
         return recipeDAO.getRecipe(recipeId)
     }
 

@@ -24,5 +24,5 @@ interface RecipeDAO {
     fun getAllFromCategory(categoryName : String) : LiveData<List<RecipeEntity>>
 
     @Query("SELECT * FROM Recipes Where id = :recipeId")
-    fun getRecipe(recipeId: Int): RecipeEntity
+    fun getRecipe(recipeId: Int): LiveData<RecipeEntity>
 }
