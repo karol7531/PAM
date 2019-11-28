@@ -43,10 +43,19 @@ class RecipeFragment : Fragment() {
 
         //fab
         fab.setOnClickListener {
+//            if (viewModel.steps.isNotEmpty()) {
+//                val stepsAction = RecipeFragmentDirections.stepsAction(arrayOf())
+//                stepsAction.setSteps(viewModel.steps.map {
+//                        step -> "${step.description}"
+//                }.toTypedArray())
+//                Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(stepsAction)
+//            } else {
+//                //TODO: string to strings
+//                Toast.makeText(context, "No steps for this recipe", Toast.LENGTH_SHORT).show()
+//            }
+
             val stepsAction = RecipeFragmentDirections.stepsAction(arrayOf())
-            stepsAction.setSteps(viewModel.steps.map {
-                    step -> "${step.number}. ${step.description}"
-            }.toTypedArray())
+            stepsAction.setSteps(arrayOf("test, recipe text 1", "test, recipe text 2", "test, recipe text 3"))
             Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(stepsAction)
         }
 
@@ -69,6 +78,7 @@ class RecipeFragment : Fragment() {
         desc.text = viewModel.getDescText()
     }
 
+    //TODO: make it work as it should
     private fun setupData() {
         viewModel.getRecipe().observe(this,
             Observer<RecipeEntity> {recipe ->

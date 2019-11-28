@@ -13,16 +13,26 @@ class MenuViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: RecipeRepo = RecipeRepo(application)
     internal var categoryType: CategoryType? = null
     internal var selectedRecipePosition: Int = 0
+    internal lateinit var recipes : LiveData<List<RecipeEntity>>
 
 //    private fun delete(recipe: RecipeEntity) = viewModelScope.launch {
 //        repository.delete(recipe)
 //    }
 
-    fun getAll() : LiveData<List<RecipeEntity>> {
+    internal fun setupData(categoryType: CategoryType?){
+        this.categoryType = categoryType
+        recipes = if (categoryType == null) {
+            getAll()
+        } else {
+            getAllFromCategory(categoryType.name)
+        }
+    }
+
+    private fun getAll() : LiveData<List<RecipeEntity>> {
         return repository.getAll()
     }
 
-    fun getAllFromCategory(categoryName : String) : LiveData<List<RecipeEntity>> {
+    private fun getAllFromCategory(categoryName : String) : LiveData<List<RecipeEntity>> {
         return repository.getAllFromCategory(categoryName)
     }
 }
