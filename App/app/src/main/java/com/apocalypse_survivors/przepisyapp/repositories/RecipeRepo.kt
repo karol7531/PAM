@@ -15,8 +15,8 @@ class RecipeRepo(application: Application) {
         recipeDAO = database.recipeDAO()
     }
 
-    fun insert(recipe: RecipeEntity){
-        recipeDAO.insert(recipe)
+    fun insert(recipe: RecipeEntity):Long{
+        return recipeDAO.insert(recipe)
     }
 
 //    fun update(recipe: RecipeEntity){

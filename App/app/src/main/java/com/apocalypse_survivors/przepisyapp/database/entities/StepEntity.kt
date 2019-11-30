@@ -11,14 +11,20 @@ import androidx.room.PrimaryKey
             parentColumns = ["id"],
             childColumns = ["recipe_id"]
         )])
-data class StepEntity (
+class StepEntity (
 
-    val recipe_id : Int,
+//    val recipe_id : Int
 
-    val number : Int,
+//    val number : Int,
 
-    val description : String?
+//    val description : String?
 ){
     @PrimaryKey(autoGenerate = true)
     var id : Int = 0
+
+    var number : Int = 0
+
+    var recipe_id : Int = -1
+
+    var description : String? = null
 }

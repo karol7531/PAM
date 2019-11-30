@@ -9,7 +9,7 @@ import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
 @Dao
 interface RecipeDAO {
     @Insert
-    fun insert(recipe : RecipeEntity)
+    fun insert(recipe : RecipeEntity):Long
 
 //    @Update
 //    fun update(recipe : RecipeEntity)

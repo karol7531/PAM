@@ -78,7 +78,7 @@ class StepsFragment : Fragment() {
     }
 
     private fun changeText() {
-        val text = "${viewModel.currentStep}. ${viewModel.steps[viewModel.currentStep]}"
+        val text = "${viewModel.currentStep + 1}. ${viewModel.steps[viewModel.currentStep]}"
         textView.text = text
     }
 

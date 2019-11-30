@@ -11,6 +11,9 @@ interface StepDAO {
     @Insert
     fun insert(step : StepEntity)
 
+    @Insert
+    fun insert(steps: List<StepEntity>)
+
 //    @Update
 //    fun update(step : StepEntity)
 //

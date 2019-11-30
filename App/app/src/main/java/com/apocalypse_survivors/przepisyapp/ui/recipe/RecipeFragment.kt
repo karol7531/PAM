@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -43,20 +44,20 @@ class RecipeFragment : Fragment() {
 
         //fab
         fab.setOnClickListener {
-//            if (viewModel.steps.isNotEmpty()) {
-//                val stepsAction = RecipeFragmentDirections.stepsAction(arrayOf())
-//                stepsAction.setSteps(viewModel.steps.map {
-//                        step -> "${step.description}"
-//                }.toTypedArray())
-//                Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(stepsAction)
-//            } else {
-//                //TODO: string to strings
-//                Toast.makeText(context, "No steps for this recipe", Toast.LENGTH_SHORT).show()
-//            }
+            if (viewModel.steps.isNotEmpty()) {
+                val stepsAction = RecipeFragmentDirections.stepsAction(arrayOf())
+                stepsAction.setSteps(viewModel.steps.map {
+                        step -> "${step.description}"
+                }.toTypedArray())
+                Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(stepsAction)
+            } else {
+                //TODO: string to strings
+                Toast.makeText(context, "No steps for this recipe", Toast.LENGTH_SHORT).show()
+            }
 
-            val stepsAction = RecipeFragmentDirections.stepsAction(arrayOf())
-            stepsAction.setSteps(arrayOf("test, recipe text 1", "test, recipe text 2", "test, recipe text 3"))
-            Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(stepsAction)
+//            val stepsAction = RecipeFragmentDirections.stepsAction(arrayOf())
+//            stepsAction.setSteps(arrayOf("test, recipe text 1", "test, recipe text 2", "test, recipe text 3"))
+//            Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(stepsAction)
         }
 
         return root

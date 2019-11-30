@@ -19,6 +19,10 @@ class StepRepo(application: Application) {
         stepDAO.insert(step)
     }
 
+    fun insert(steps: List<StepEntity>){
+        stepDAO.insert(steps)
+    }
+
     fun getAllByRecipeId(recipeId: Int): LiveData<List<StepEntity>> {
         return stepDAO.getAllByRecipeId(recipeId)
     }

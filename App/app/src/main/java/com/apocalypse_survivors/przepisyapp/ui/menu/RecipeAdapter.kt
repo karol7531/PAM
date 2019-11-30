@@ -14,8 +14,6 @@ import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
 import com.bumptech.glide.Glide
 
 
-
-
 class RecipeAdapter(private val activity: Activity) : RecyclerView.Adapter<RecipeAdapter.RecipeHolder>() {
 
     private var recipes : List<RecipeEntity> = listOf()

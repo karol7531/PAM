@@ -13,6 +13,8 @@ import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.apocalypse_survivors.przepisyapp.R
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,6 +33,8 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
     private lateinit var fab: FloatingActionButton
     private lateinit var spinner: Spinner
     private lateinit var imageButton: ImageButton
+    private lateinit var stepsRecyclerView: RecyclerView
+    private lateinit var stepsAdapter: StepsAdapter
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,12 +46,20 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
         fab = root.findViewById(R.id.modify_fab_done)
         nameEdit = root.findViewById(R.id.modify_text_name)
         ingredientsEdit = root.findViewById(R.id.modify_text_ingredients)
+        stepsRecyclerView = root.findViewById(R.id.modify_steps_recyclerview)
+        stepsAdapter = StepsAdapter(activity!!)
+
+        stepsRecyclerView.layoutManager = LinearLayoutManager(context)
+        stepsRecyclerView.setHasFixedSize(true)
+        stepsRecyclerView.adapter = stepsAdapter
+        stepsRecyclerView.isNestedScrollingEnabled = false
 
         //fab
         fab.setOnClickListener {
             val name = nameEdit.text.toString()
             val ingredients = ingredientsEdit.text.toString()
-            if(!viewModel.saveRecipe(name, ingredients, 0, 0, context!!)){
+            val steps = stepsAdapter.steps
+            if(!viewModel.saveRecipe(name, ingredients, 0, 0, steps, context!!)){
                 Toast.makeText(context, R.string.invalid_params, Toast.LENGTH_SHORT).show()
             } else{
                 Toast.makeText(context, R.string.save_success, Toast.LENGTH_SHORT).show()
@@ -68,6 +80,12 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
             } else {
                 pickFromGallery()
             }
+        }
+
+
+        val addStep : Button= root.findViewById(R.id.modify_add_step_button)
+        addStep.setOnClickListener {
+            stepsAdapter.addStep(-1)
         }
 
         return root
