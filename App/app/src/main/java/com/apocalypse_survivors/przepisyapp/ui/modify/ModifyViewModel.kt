@@ -3,6 +3,7 @@ package com.apocalypse_survivors.przepisyapp.ui.modify
 import android.R
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.lifecycle.AndroidViewModel
 import com.apocalypse_survivors.przepisyapp.common.DateTimeConverter
@@ -36,14 +37,26 @@ class ModifyViewModel(application: Application) : AndroidViewModel(application) 
                 image = imagePath, time = time, portion = portion, created = created)
 
             val recipeId = insert(recipe).toInt()
+            Log.d("ModifyViewModel", "recipe saved")
 
-            val correctSteps = steps.filter { !it.description.isNullOrEmpty() }
-            correctSteps.forEach { it.recipe_id = recipeId }
+            val correctSteps = prepareSteps(steps, recipeId)
 
             insertSteps(correctSteps)
+            Log.d("ModifyViewModel", "steps saved")
         }
 
         return true
+    }
+
+    // filters out empty steps, sets proper recipeId and number
+    private fun prepareSteps(steps: List<StepEntity>, recipeId: Int): List<StepEntity> {
+        val correctSteps = steps.filter { !it.description.isNullOrEmpty() }
+        for (i in 0 until correctSteps.size - 1) {
+            val currentStep = correctSteps[i]
+            currentStep.number = i + 1
+            currentStep.recipe_id = recipeId
+        }
+        return correctSteps
     }
 
     private fun insertSteps(steps: List<StepEntity>) {
@@ -56,11 +69,10 @@ class ModifyViewModel(application: Application) : AndroidViewModel(application) 
 //        }
     }
 
-
     internal fun getSpinnerAdapter(context: Context): ArrayAdapter<String> {
         val categoryLabels = CategoryType.values()
             .filter { it.isMainCategory }
-            .map { it.getLabel(context!!) }
+            .map { it.getLabel(context) }
         return ArrayAdapter(context, R.layout.simple_spinner_item, categoryLabels)
     }
 }

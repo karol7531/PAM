@@ -32,16 +32,15 @@ class StepsFragment : Fragment() {
         prevButton = root.findViewById(R.id.steps_prev_button)
         textView = root.findViewById(R.id.steps_descripton)
 
-        arguments?.let {
-            val args = StepsFragmentArgs.fromBundle(it)
-            viewModel.steps = args.steps
-        }
+        getNavigationArguments()
 
         changeText()
 
         initTextToSpeech(Locale.US)
 
+        //play button
         playButton.setOnClickListener {
+            Log.i("StepsFragment", "play button clicked")
             if (!textToSpeech.isSpeaking) {
                 val text = viewModel.steps[viewModel.currentStep]
                 val speechStatus = textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null)
@@ -52,7 +51,9 @@ class StepsFragment : Fragment() {
             }
         }
 
+        //prev button
         prevButton.setOnClickListener {
+            Log.i("StepsFragment", "prev button clicked")
             if(viewModel.currentStep > 0){
                 viewModel.currentStep--
                 changeText()
@@ -63,7 +64,9 @@ class StepsFragment : Fragment() {
             }
         }
 
+        //next button
         nextButton.setOnClickListener {
+            Log.i("StepsFragment", "next button clicked")
             if(viewModel.currentStep < viewModel.steps.size - 1){
                 viewModel.currentStep++
                 changeText()
@@ -75,6 +78,14 @@ class StepsFragment : Fragment() {
         }
 
         return root
+    }
+
+    // gets passed arguments from bundle
+    private fun getNavigationArguments() {
+        arguments?.let {
+            val args = StepsFragmentArgs.fromBundle(it)
+            viewModel.steps = args.steps
+        }
     }
 
     private fun changeText() {
@@ -91,9 +102,9 @@ class StepsFragment : Fragment() {
                     if (ttsLang == TextToSpeech.LANG_MISSING_DATA || ttsLang == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("StepsFragment", "The Language is not supported!")
                     } else {
-                        Log.i("StepsFragment", "Language Supported.")
+                        Log.v("StepsFragment", "Language Supported")
                     }
-                    Log.i("StepsFragment", "Initialization success.")
+                    Log.d("StepsFragment", "TextToSpeech initialization success")
                 }
 //                else {
 //                    Toast.makeText(

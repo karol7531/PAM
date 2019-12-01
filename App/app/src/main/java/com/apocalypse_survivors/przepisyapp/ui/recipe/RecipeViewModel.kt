@@ -28,7 +28,6 @@ class RecipeViewModel(application: Application) :  AndroidViewModel(application)
     //WARN: recipe can not be initialized
     internal fun getDescText(): String {
         val builder = StringBuilder()
-        //TODO: add ingredients
         builder.append(recipe.name).append("\n\n")
             .append(recipe.description).append("\n\n")
         steps.forEach { step -> builder.append(step.number).append(". ").append(step.description).append("\n\n") }

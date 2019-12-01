@@ -35,15 +35,13 @@ class RecipeFragment : Fragment() {
         fab = root.findViewById(R.id.recipe_fab_play)
         desc = root.findViewById(R.id.recipe_descripton)
 
-        arguments?.let {
-            val args = RecipeFragmentArgs.fromBundle(it)
-            viewModel.recipeId = args.recipeId
-        }
+        getNavigationArguments()
 
         setupData()
 
         //fab
         fab.setOnClickListener {
+            Log.i("RecipeFragment", "fab clicked")
             if (viewModel.steps.isNotEmpty()) {
                 val stepsAction = RecipeFragmentDirections.stepsAction(arrayOf())
                 stepsAction.setSteps(viewModel.steps.map {
@@ -51,35 +49,40 @@ class RecipeFragment : Fragment() {
                 }.toTypedArray())
                 Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(stepsAction)
             } else {
-                //TODO: string to strings
                 Toast.makeText(context, "No steps for this recipe", Toast.LENGTH_SHORT).show()
             }
-
-//            val stepsAction = RecipeFragmentDirections.stepsAction(arrayOf())
-//            stepsAction.setSteps(arrayOf("test, recipe text 1", "test, recipe text 2", "test, recipe text 3"))
-//            Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(stepsAction)
         }
 
         return root
     }
 
-    private fun setValues() {
-        // set image
+    // gets passed arguments from bundle
+    private fun getNavigationArguments() {
+        arguments?.let {
+            val args = RecipeFragmentArgs.fromBundle(it)
+            viewModel.recipeId = args.recipeId
+        }
+    }
+
+    private fun setImage() {
         try {
             val imgUri = Uri.parse(viewModel.recipe.image)
             Glide
                 .with(context!!)
                 .load(imgUri)
                 .into(image)
+            Log.d("RecipeFragment", "image setted")
         } catch (e: Exception) {
             Log.w("RecipeAdapter", "image not found: ${viewModel.recipe.image}")
         }
-
-        // set description
-        desc.text = viewModel.getDescText()
     }
 
-    //TODO: make it work as it should
+    private fun setDesc(){
+        desc.text = viewModel.getDescText()
+        Log.d("RecipeFragment", "description setted")
+    }
+
+    //TODO: make it work as it should -> no getRecipe()
     private fun setupData() {
         viewModel.getRecipe().observe(this,
             Observer<RecipeEntity> {recipe ->
@@ -87,9 +90,11 @@ class RecipeFragment : Fragment() {
 
                 viewModel.getSteps().observe(this,
                     Observer<List<StepEntity>> { steps ->
-                        viewModel.steps = steps })
+                        viewModel.steps = steps
+                        setDesc()
+                    })
 
-                setValues()
+                setImage()
             })
     }
 }

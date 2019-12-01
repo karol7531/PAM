@@ -11,7 +11,7 @@ import com.apocalypse_survivors.przepisyapp.repositories.RecipeRepo
 class MenuViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: RecipeRepo = RecipeRepo(application)
-    internal var categoryType: CategoryType? = null
+    private var categoryType: CategoryType? = null
     internal var selectedRecipePosition: Int = 0
     internal lateinit var recipes : LiveData<List<RecipeEntity>>
 

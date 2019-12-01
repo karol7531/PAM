@@ -47,8 +47,9 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
         nameEdit = root.findViewById(R.id.modify_text_name)
         ingredientsEdit = root.findViewById(R.id.modify_text_ingredients)
         stepsRecyclerView = root.findViewById(R.id.modify_steps_recyclerview)
-        stepsAdapter = StepsAdapter(activity!!)
+        stepsAdapter = StepsAdapter()
 
+        //stepsRecyclerView
         stepsRecyclerView.layoutManager = LinearLayoutManager(context)
         stepsRecyclerView.setHasFixedSize(true)
         stepsRecyclerView.adapter = stepsAdapter
@@ -56,9 +57,11 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
 
         //fab
         fab.setOnClickListener {
+            Log.i("ModifyFragment", "fab clicked")
             val name = nameEdit.text.toString()
             val ingredients = ingredientsEdit.text.toString()
             val steps = stepsAdapter.steps
+            //WARN: some values are hardcoded
             if(!viewModel.saveRecipe(name, ingredients, 0, 0, steps, context!!)){
                 Toast.makeText(context, R.string.invalid_params, Toast.LENGTH_SHORT).show()
             } else{
@@ -75,6 +78,7 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
 
         //image button
         imageButton.setOnClickListener {
+            Log.i("ModifyFragment", "image button clicked")
             if(ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_DENIED) {
                 requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_CODE_READ)
             } else {
@@ -82,22 +86,25 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
             }
         }
 
-
+        //add step button
         val addStep : Button= root.findViewById(R.id.modify_add_step_button)
         addStep.setOnClickListener {
+            Log.i("ModifyFragment", "add step button clicked")
             stepsAdapter.addStep(-1, stepsRecyclerView)
         }
 
         return root
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-    }
+    //spinner
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
 
+    //spinner
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         viewModel.spinnerCategory = parent?.getItemAtPosition(position).toString()
     }
 
+    //imageButton
     private fun pickFromGallery() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.type = "image/*"
@@ -115,7 +122,7 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
 
                 viewModel.imagePath = imgUri.toString()
 
-                Log.i("ModifyFragment", "img path: $viewModel.imagePath")
+                Log.i("ModifyFragment", "img selected: $viewModel.imagePath")
             }
         }
     }

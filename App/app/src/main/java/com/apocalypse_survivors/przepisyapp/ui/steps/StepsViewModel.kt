@@ -8,6 +8,4 @@ class StepsViewModel(application: Application) : AndroidViewModel(application) {
     internal lateinit var steps : Array<String>
     internal var currentStep: Int = 0
 
-
-
 }

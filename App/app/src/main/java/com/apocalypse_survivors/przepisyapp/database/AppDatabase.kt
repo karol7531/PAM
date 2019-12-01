@@ -6,33 +6,18 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.apocalypse_survivors.przepisyapp.R
 import com.apocalypse_survivors.przepisyapp.database.DAO.*
 import com.apocalypse_survivors.przepisyapp.database.entities.*
-import com.apocalypse_survivors.przepisyapp.database.entities.CategoryType
-import com.apocalypse_survivors.przepisyapp.database.entities.MeasureType
 import java.util.concurrent.Executors
 
-//useful links:
+//NOTE: useful links:
 // https://en.proft.me/2019/09/27/android-room-kotlin-coroutines-viewmodel-livedata/
 @Database(entities = [CategoryEntity::class, IngredientEntity::class, MeasureEntity::class, RecipeEntity::class, StepEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
-//    companion object : SingletonHolder<AppDatabase, Context>({
-//        Room.databaseBuilder(it, AppDatabase::class.java, "RecipesDB")
-//            .addCallback(object : Callback(){
-//                override fun onCreate(db: SupportSQLiteDatabase) {
-//                    super.onCreate(db)
-//                }
-//
-//                fun populateCategories(){
-//
-//                }
-//            }).build()
-//    })
-
     companion object {
 
+        // helps keep this class as singleton
         @Volatile private var INSTANCE: AppDatabase? = null
 
         fun getInstance(context: Context): AppDatabase =
@@ -46,7 +31,7 @@ abstract class AppDatabase : RoomDatabase() {
                 .addCallback(object : Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
-                        // insert the data on the IO Thread
+
                         populateCategories()
 //                        populateMeasures()
                     }
@@ -54,7 +39,7 @@ abstract class AppDatabase : RoomDatabase() {
                     fun populateCategories() {
                         Executors.newSingleThreadExecutor().execute {
                             getInstance(context).categoryDAO().insert(CategoriesData)
-                            Log.i("AppDatabase", "Categories inserted")
+                            Log.d("AppDatabase", "Categories inserted")
                         }
                     }
 
@@ -63,9 +48,6 @@ abstract class AppDatabase : RoomDatabase() {
                             getInstance(context).measureDAO().insert(MeasuresData)
                         }
                     }
-
-//                    val CategoriesData = context.resources.getStringArray(R.array.categories)
-//                        .map { CategoryEntity(it, "") }
                 })
                 .build()
 

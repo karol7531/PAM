@@ -16,7 +16,13 @@ import com.bumptech.glide.Glide
 
 class RecipeAdapter(private val activity: Activity) : RecyclerView.Adapter<RecipeAdapter.RecipeHolder>() {
 
-    private var recipes : List<RecipeEntity> = listOf()
+    internal var recipes : List<RecipeEntity> = listOf()
+        set(value) {
+            Log.d("RecipeAdapter", "recipes setted, item_len = ${recipes.size}")
+            field= value
+            //not the best way to notify
+            notifyDataSetChanged()
+        }
     private lateinit var onItemClickListener: OnItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeHolder {
@@ -29,11 +35,12 @@ class RecipeAdapter(private val activity: Activity) : RecyclerView.Adapter<Recip
     }
 
     override fun onBindViewHolder(holder: RecipeHolder, position: Int) {
-        var currentRecipe  = recipes[position]
+        val currentRecipe  = recipes[position]
+
+        //name
         holder.nameTextView.text = currentRecipe.name
 
-//        holder.imageButton.setImageDrawable(R.drawable.ic_fast_food)
-
+        //image
         Log.d("RecipeAdapter", "imgPath: ${currentRecipe.image}")
         if (currentRecipe.image.isNotEmpty()){
             try {
@@ -44,24 +51,18 @@ class RecipeAdapter(private val activity: Activity) : RecyclerView.Adapter<Recip
                     .into(holder.imageButton)
             } catch (e: NullPointerException) {
                 Log.w("RecipeAdapter", "image not found: ${currentRecipe.image}")
-                Glide
-                    .with(activity)
-                    .load(R.drawable.ic_fast_food)
-                    .into(holder.imageButton)
+                glideBasicImg(holder)
             }
         }else{
-            Glide
-                .with(activity)
-                .load(R.drawable.ic_fast_food)
-                .into(holder.imageButton)
+            glideBasicImg(holder)
         }
     }
 
-    internal fun setRecipes(recipes : List<RecipeEntity>){
-        Log.i("RecipeAdapter", "DataSetChanged: item_len = ${recipes.size}")
-        this.recipes = recipes
-        //not the best way to notify
-        notifyDataSetChanged()
+    private fun glideBasicImg(holder: RecipeHolder) {
+        Glide
+            .with(activity)
+            .load(R.drawable.ic_fast_food)
+            .into(holder.imageButton)
     }
 
     inner class RecipeHolder(view: View) : RecyclerView.ViewHolder(view){

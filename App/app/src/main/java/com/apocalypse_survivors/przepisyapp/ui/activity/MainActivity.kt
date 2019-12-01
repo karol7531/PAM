@@ -41,8 +41,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        viewModel.categorySelected =
-            findCategory(item.title.toString(), this)
+        viewModel.categorySelected = findCategory(item.title.toString(), this)
         Log.i("MainActivity", "category selected: ${viewModel.categorySelected}")
         drawer.closeDrawers()
         callOnCategoryChanged()
@@ -53,9 +52,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun setToolbarTitle() {
         if (viewModel.categorySelected != null) {
             supportActionBar?.title = viewModel.categorySelected?.getLabel(this)
+            Log.d("MainActivity", "toolbar title setted")
         }
     }
 
+    // calls OnCategoryChanged() on every fragment which is OnCategoryChangedListener
     private fun callOnCategoryChanged() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
         val fragments = navHostFragment?.childFragmentManager?.fragments

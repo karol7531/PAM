@@ -33,17 +33,20 @@ class MenuFragment : Fragment(), OnCategoryChangedListener {
         fab = root.findViewById(R.id.menu_fab_modify)
         recyclerView  = root.findViewById(R.id.menu_recycler_view)
 
+        //recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
-
         recyclerView.adapter = recipeAdapter
 
+        //adapter
         recipeAdapter.setOnItemCLickListener(object : RecipeAdapter.OnItemClickListener{
             override fun onItemClick(recipe: RecipeEntity, position: Int) {
+                Log.i("MenuFragment", "item selected at position $position")
                 viewModel.selectedRecipePosition = position
                 val selectAction = MenuFragmentDirections.selectAction()
                 selectAction.setRecipeId(recipe.id)
                 Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(selectAction)
+                Log.d("MenuFragment", "navigate to RecipeFragment")
             }
         })
 
@@ -51,6 +54,7 @@ class MenuFragment : Fragment(), OnCategoryChangedListener {
 
         //fab
         fab.setOnClickListener {
+            Log.i("MenuFragment", "add fab clicked")
             Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(R.id.add_action)
         }
 
@@ -58,37 +62,26 @@ class MenuFragment : Fragment(), OnCategoryChangedListener {
     }
 
     private fun scrollRecycler(){
-        Log.i("MenuFragment", "scroll to position: ${viewModel.selectedRecipePosition}")
+        Log.d("MenuFragment", "scroll to position: ${viewModel.selectedRecipePosition}")
         recyclerView.smoothScrollToPosition(viewModel.selectedRecipePosition)
     }
 
+    //set items to recycler and observe live data
     private fun setupData() {
-        //set items to recycler and observe live data
+        //WARN: not safe activity cast
         viewModel.setupData((activity as MainActivity).getCategorySelected())
 
         viewModel.recipes.observe(this,
             Observer<List<RecipeEntity>> {
-                    recipes -> recipeAdapter.setRecipes(recipes!!)
+                if (recipeAdapter.recipes != it) {
+                    recipeAdapter.recipes = it
+                }
                 scrollRecycler()
             })
-
-//        if (viewModel.categoryType == null) {
-//            viewModel.recipes = viewModel.getAll()
-//            viewModel.getAll().observe(this,
-//                Observer<List<RecipeEntity>> {
-//                        recipes -> recipeAdapter.setRecipes(recipes!!)
-//                    scrollRecycler()
-//                })
-//
-//        } else {
-//            viewModel.getAllFromCategory(viewModel.categoryType!!.name).observe(this,
-//                Observer<List<RecipeEntity>> {
-//                        recipes -> recipeAdapter.setRecipes(recipes!!)
-//                    scrollRecycler()
-//                })
-//        }
+        Log.d("MenuFragment", "data setted up")
     }
 
+    //drawer
     override fun onCategoryChanged(newCategory: CategoryType) {
         Log.d("MenuFragment", "category changed")
         setupData()
