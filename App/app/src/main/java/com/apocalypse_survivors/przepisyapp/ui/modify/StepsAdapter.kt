@@ -34,8 +34,12 @@ class StepsAdapter(private val activity: Activity) : RecyclerView.Adapter<StepsA
 
     override fun onBindViewHolder(holder: StepsHolder, position: Int) {
         var currentStep  = steps[position]
+
         holder.numTextView.text = "${position + 1}. "
         currentStep.number = position + 1
+
+
+        holder.descEditText.setText(currentStep.description)
 
         holder.descEditText.addTextChangedListener(object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {
@@ -56,15 +60,17 @@ class StepsAdapter(private val activity: Activity) : RecyclerView.Adapter<StepsA
 
         //        if (!currentStep.description.isNullOrEmpty()){
 //        holder.descEditText.setText("")
-        holder.descEditText.setText(currentStep.description)
+//        holder.descEditText.setText(currentStep.description)
 //        }
     }
 
-    internal fun addStep(recipeId:Int){
+    internal fun addStep(recipeId: Int, stepsRecyclerView: RecyclerView){
         Log.i("stepsAdapter", "AddStep")
         steps.add(StepEntity())
-//        notifyItemInserted(steps.size - 1)
-        notifyDataSetChanged()
+
+        //NOTE: notifyDataSetChanged() not working properly with TextChangedListener
+        notifyItemInserted(steps.size - 1)
+        stepsRecyclerView.requestLayout()
     }
 
     inner class StepsHolder(view: View) : RecyclerView.ViewHolder(view){

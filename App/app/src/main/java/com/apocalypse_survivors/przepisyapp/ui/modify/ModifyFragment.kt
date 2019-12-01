@@ -85,7 +85,7 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
 
         val addStep : Button= root.findViewById(R.id.modify_add_step_button)
         addStep.setOnClickListener {
-            stepsAdapter.addStep(-1)
+            stepsAdapter.addStep(-1, stepsRecyclerView)
         }
 
         return root
