@@ -71,7 +71,7 @@ class ModifyViewModel(application: Application) : AndroidViewModel(application) 
 
     internal fun getSpinnerAdapter(context: Context): ArrayAdapter<String> {
         val categoryLabels = CategoryType.values()
-            .filter { it.isMainCategory }
+            .filter { it.isMainCategory && it.name != CategoryType.ALL.name }
             .map { it.getLabel(context) }
         return ArrayAdapter(context, R.layout.simple_spinner_item, categoryLabels)
     }

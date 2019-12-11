@@ -17,10 +17,10 @@ interface RecipeDAO {
 //    @Delete
 //    fun delete(recipe: RecipeEntity)
 
-    @Query("SELECT * FROM Recipes")
+    @Query("SELECT * FROM Recipes ORDER BY name")
     fun getAll() : LiveData<List<RecipeEntity>>
 
-    @Query("SELECT * FROM Recipes WHERE category_id = :categoryName")
+    @Query("SELECT * FROM Recipes WHERE category_id = :categoryName ORDER BY name")
     fun getAllFromCategory(categoryName : String) : LiveData<List<RecipeEntity>>
 
     @Query("SELECT * FROM Recipes Where id = :recipeId")

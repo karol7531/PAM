@@ -3,55 +3,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/drawer_baking"
-            android:icon="@drawable/ic_square"
-            android:title="@string/BAKING" />
-        <item
-            android:id="@+id/drawer_beverages"
-            android:icon="@drawable/ic_square"
-            android:title="@string/BEVERAGES" />
-        <item
-            android:id="@+id/drawer_cakes"
-            android:icon="@drawable/ic_square"
-            android:title="@string/CAKES" />
-        <item
-            android:id="@+id/drawer_desserts"
-            android:icon="@drawable/ic_square"
-            android:title="@string/DESSERTS" />
-        <item
-            android:id="@+id/fishes_seafood"
-            android:icon="@drawable/ic_square"
-            android:title="@string/FISHES_SEAFOOD" />
-        <item
-            android:id="@+id/fishes_grilled"
-            android:icon="@drawable/ic_square"
-            android:title="@string/GRILLED" />
-        <item
-            android:id="@+id/fishes_meat_dishes"
-            android:icon="@drawable/ic_square"
-            android:title="@string/MEAT_DISHES" />
-        <item
-            android:id="@+id/fishes_pasta"
-            android:icon="@drawable/ic_square"
-            android:title="@string/PASTA" />
-        <item
-            android:id="@+id/drawer_salads"
-            android:icon="@drawable/ic_square"
-            android:title="@string/SALADS" />
-        <item
-            android:id="@+id/drawer_snacks"
-            android:icon="@drawable/ic_square"
-            android:title="@string/SNACKS" />
-        <item
-            android:id="@+id/drawer_soups"
-            android:icon="@drawable/ic_square"
-            android:title="@string/SOUPS" />
-        <item
-            android:id="@+id/drawer_vegetarian"
-            android:icon="@drawable/ic_square"
-            android:title="@string/VEGETARIAN" />
-    </group>
+    <item
+        android:id="@+id/drawer_all"
+        android:icon="@drawable/ic_square"
+        android:title="@string/ALL" />
+
+    <item android:title="@string/menu_categories">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/drawer_baking"
+                    android:icon="@drawable/ic_square"
+                    android:title="@string/BAKING" />
+                <item
+                    android:id="@+id/drawer_beverages"
+                    android:icon="@drawable/ic_square"
+                    android:title="@string/BEVERAGES" />
+                <item
+                    android:id="@+id/drawer_cakes"
+                    android:icon="@drawable/ic_square"
+                    android:title="@string/CAKES" />
+                <item
+                    android:id="@+id/drawer_desserts"
+                    android:icon="@drawable/ic_square"
+                    android:title="@string/DESSERTS" />
+                <item
+                    android:id="@+id/fishes_seafood"
+                    android:icon="@drawable/ic_square"
+                    android:title="@string/FISHES_SEAFOOD" />
+                <item
+                    android:id="@+id/fishes_grilled"
+                    android:icon="@drawable/ic_square"
+                    android:title="@string/GRILLED" />
+                <item
+                    android:id="@+id/fishes_meat_dishes"
+                    android:icon="@drawable/ic_square"
+                    android:title="@string/MEAT_DISHES" />
+                <item
+                    android:id="@+id/fishes_pasta"
+                    android:icon="@drawable/ic_square"
+                    android:title="@string/PASTA" />
+                <item
+                    android:id="@+id/drawer_salads"
+                    android:icon="@drawable/ic_square"
+                    android:title="@string/SALADS" />
+                <item
+                    android:id="@+id/drawer_snacks"
+                    android:icon="@drawable/ic_square"
+                    android:title="@string/SNACKS" />
+                <item
+                    android:id="@+id/drawer_soups"
+                    android:icon="@drawable/ic_square"
+                    android:title="@string/SOUPS" />
+                <item
+                    android:id="@+id/drawer_vegetarian"
+                    android:icon="@drawable/ic_square"
+                    android:title="@string/VEGETARIAN" />
+            </group>
+        </menu>
+    </item>
 
 </menu>

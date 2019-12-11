@@ -21,7 +21,7 @@ class MenuViewModel(application: Application) : AndroidViewModel(application) {
 
     internal fun setupData(categoryType: CategoryType?){
         this.categoryType = categoryType
-        recipes = if (categoryType == null) {
+        recipes = if (categoryType == null || categoryType == CategoryType.ALL) {
             getAll()
         } else {
             getAllFromCategory(categoryType.name)

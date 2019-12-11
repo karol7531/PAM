@@ -8,6 +8,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_category">Category</string>
+    <string name="menu_categories">Categories</string>
     <string name="menu_modify">Modify</string>
     <string name="menu_recipe">Recipe</string>
     <string name="menu_steps">Steps</string>
@@ -23,6 +24,7 @@
 
 <!--    mamy enum i nazwy wartości z tego enuma idą do bazy, enum zwraca nazwy odpowiadające mu w
 postaci wartości ze stringów, a string array powinien zostać zamieniony na adpter-->
+    <string name="ALL">All</string>
     <string name="SNACKS">Snacks</string>
     <string name="SOUPS">Soups</string>
     <string name="MEAT_DISHES">Meat dishes</string>

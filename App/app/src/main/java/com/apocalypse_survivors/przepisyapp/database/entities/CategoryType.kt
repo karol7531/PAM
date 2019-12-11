@@ -3,6 +3,7 @@ package com.apocalypse_survivors.przepisyapp.database.entities
 import android.content.Context
 
 enum class CategoryType(val isMainCategory: Boolean) {
+    ALL(true),
     BAKING(true),
         ROLLS(false),
         CROISSANTS(false),
@@ -41,8 +42,8 @@ enum class CategoryType(val isMainCategory: Boolean) {
     SNACKS(true),
         COLD_SNACKS(false),
         HOT_SNACKS(false),
-    SOUPS(true),
-    VEGETARIAN(true);
+    SOUPS(true);
+//    VEGETARIAN(true),
 //    CHILDRENS_DISHES(true),
 //    GROATS_RICE(true),
 //        GROATS(false),
