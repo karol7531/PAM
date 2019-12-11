@@ -51,7 +51,7 @@ class ModifyViewModel(application: Application) : AndroidViewModel(application) 
     // filters out empty steps, sets proper recipeId and number
     private fun prepareSteps(steps: List<StepEntity>, recipeId: Int): List<StepEntity> {
         val correctSteps = steps.filter { !it.description.isNullOrEmpty() }
-        for (i in 0 until correctSteps.size - 1) {
+        for (i in 0 until correctSteps.size) {
             val currentStep = correctSteps[i]
             currentStep.number = i + 1
             currentStep.recipe_id = recipeId

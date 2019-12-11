@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.apocalypse_survivors.przepisyapp.R
 import com.apocalypse_survivors.przepisyapp.database.entities.StepEntity
 
-class StepsAdapter : RecyclerView.Adapter<StepsAdapter.StepsHolder>() {
+class StepsAdapter(var stepsRecyclerView: RecyclerView) : RecyclerView.Adapter<StepsAdapter.StepsHolder>() {
 
     internal var steps : MutableList<StepEntity> = mutableListOf()
         set(value) {
@@ -45,6 +45,11 @@ class StepsAdapter : RecyclerView.Adapter<StepsAdapter.StepsHolder>() {
                 Log.d("StepsAdapter", "text changed on position: ${position + 1}")
 
                 currentStep.description = s.toString()
+
+                // we are at the last element and user typed in something -> add new item to the list
+                if (position == itemCount - 1){
+                    addStep()
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -53,7 +58,7 @@ class StepsAdapter : RecyclerView.Adapter<StepsAdapter.StepsHolder>() {
         })
     }
 
-    internal fun addStep(recipeId: Int, stepsRecyclerView: RecyclerView){
+    internal fun addStep(){
         Log.i("StepsAdapter", "AddStep")
         steps.add(StepEntity())
 

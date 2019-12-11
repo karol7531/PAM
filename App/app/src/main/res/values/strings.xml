@@ -14,10 +14,6 @@
 
     <string name="ingredients">Ingredients</string>
     <string name="steps">Steps</string>
-    <string name="menu_salads">Salads</string>
-    <string name="menu_soups">Soups</string>
-    <string name="menu_dishes">Dishes</string>
-    <string name="menu_desserts">Desserts</string>
     <string name="name">Name</string>
     <string name="inset_name">Please insert name</string>
     <string name="save_success">Saved successfully</string>

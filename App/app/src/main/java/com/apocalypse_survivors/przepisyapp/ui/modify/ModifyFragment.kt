@@ -47,7 +47,8 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
         nameEdit = root.findViewById(R.id.modify_text_name)
         ingredientsEdit = root.findViewById(R.id.modify_text_ingredients)
         stepsRecyclerView = root.findViewById(R.id.modify_steps_recyclerview)
-        stepsAdapter = StepsAdapter()
+        stepsAdapter = StepsAdapter(stepsRecyclerView)
+        stepsAdapter.addStep()
 
         //stepsRecyclerView
         stepsRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -84,13 +85,6 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
             } else {
                 pickFromGallery()
             }
-        }
-
-        //add step button
-        val addStep : Button= root.findViewById(R.id.modify_add_step_button)
-        addStep.setOnClickListener {
-            Log.i("ModifyFragment", "add step button clicked")
-            stepsAdapter.addStep(-1, stepsRecyclerView)
         }
 
         return root
