@@ -41,7 +41,7 @@ class RecipeAdapter(private val activity: Activity) : RecyclerView.Adapter<Recip
         holder.nameTextView.text = currentRecipe.name
 
         //image
-        Log.d("RecipeAdapter", "imgPath: ${currentRecipe.image}")
+        Log.v("RecipeAdapter", "imgPath: ${currentRecipe.image}")
         if (currentRecipe.image.isNotEmpty()){
             try {
                 val imgUri = Uri.parse(currentRecipe.image)
@@ -68,12 +68,16 @@ class RecipeAdapter(private val activity: Activity) : RecyclerView.Adapter<Recip
     inner class RecipeHolder(view: View) : RecyclerView.ViewHolder(view){
         val f = view.setOnClickListener {
             if (adapterPosition != RecyclerView.NO_POSITION){
-                val selectedRecipe = recipes[adapterPosition]
+                val selectedRecipe = getRecipeAtPosition(adapterPosition)
                 onItemClickListener.onItemClick(selectedRecipe, adapterPosition)
             }
         }
         val nameTextView: TextView = view.findViewById(R.id.recipe_item_name)
         val imageButton: ImageView = view.findViewById(R.id.recipe_item_image)
+    }
+
+    internal fun getRecipeAtPosition(position : Int) : RecipeEntity{
+        return recipes[position]
     }
 
     interface OnItemClickListener{

@@ -15,6 +15,10 @@ class StepRepo(application: Application) {
         stepDAO = database.stepDAO()
     }
 
+    fun deleteSteps(steps: List<StepEntity>){
+        stepDAO.delete(steps)
+    }
+
     fun insert(step: StepEntity){
         stepDAO.insert(step)
     }
@@ -25,5 +29,9 @@ class StepRepo(application: Application) {
 
     fun getAllByRecipeId(recipeId: Int): LiveData<List<StepEntity>> {
         return stepDAO.getAllByRecipeId(recipeId)
+    }
+
+    fun getAllByRecipeIdList(recipeId : Int): List<StepEntity>{
+        return stepDAO.getAllByRecipeIdList(recipeId)
     }
 }

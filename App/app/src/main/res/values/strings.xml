@@ -45,5 +45,8 @@ postaci wartości ze stringów, a string array powinien zostać zamieniony na ad
     <string name="SAUCES_PASTES">Sauces and pastes</string>
     <string name="BEVERAGES">Beverages</string>
     <string name="invalid_params">Invalid parameters</string>
+    <string name="recipe_deleted">Recipe deleted</string>
+    <string name="undo">UNDO</string>
+    <string name="undo_successful">Undo successful</string>
 
 </resources>

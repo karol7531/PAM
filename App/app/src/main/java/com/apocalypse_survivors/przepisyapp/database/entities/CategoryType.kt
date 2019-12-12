@@ -2,6 +2,7 @@ package com.apocalypse_survivors.przepisyapp.database.entities
 
 import android.content.Context
 
+// items in drawer must be the same
 enum class CategoryType(val isMainCategory: Boolean) {
     ALL(true),
     BAKING(true),

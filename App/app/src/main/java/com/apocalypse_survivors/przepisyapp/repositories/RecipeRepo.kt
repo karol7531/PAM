@@ -22,10 +22,10 @@ class RecipeRepo(application: Application) {
 //    fun update(recipe: RecipeEntity){
 //
 //    }
-//
-//    fun delete(recipe: RecipeEntity){
-//
-//    }
+
+    fun delete(recipe: RecipeEntity){
+        recipeDAO.delete(recipe)
+    }
 
     fun getAll(): LiveData<List<RecipeEntity>> {
         return recipeDAO.getAll()
@@ -38,6 +38,4 @@ class RecipeRepo(application: Application) {
     fun getRecipe(recipeId: Int): LiveData<RecipeEntity> {
         return recipeDAO.getRecipe(recipeId)
     }
-
-
 }

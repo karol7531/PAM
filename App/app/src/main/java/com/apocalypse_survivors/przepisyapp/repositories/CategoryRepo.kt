@@ -9,7 +9,7 @@ import com.apocalypse_survivors.przepisyapp.database.entities.CategoryEntity
 class CategoryRepo(application: Application){
 
     private var database: AppDatabase = AppDatabase.getInstance(application)
-    private lateinit var categoryDAO: CategoryDAO
+    private var categoryDAO: CategoryDAO
 
     init {
         categoryDAO = database.categoryDAO()

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-
+<!-- items in CategoryType must be the same-->
     <item
         android:id="@+id/drawer_all"
         android:icon="@drawable/ic_square"
@@ -55,10 +55,6 @@
                     android:id="@+id/drawer_soups"
                     android:icon="@drawable/ic_square"
                     android:title="@string/SOUPS" />
-                <item
-                    android:id="@+id/drawer_vegetarian"
-                    android:icon="@drawable/ic_square"
-                    android:title="@string/VEGETARIAN" />
             </group>
         </menu>
     </item>

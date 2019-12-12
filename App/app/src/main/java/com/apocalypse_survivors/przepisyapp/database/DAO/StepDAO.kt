@@ -2,6 +2,7 @@ package com.apocalypse_survivors.przepisyapp.database.DAO
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.apocalypse_survivors.przepisyapp.database.entities.StepEntity
@@ -20,9 +21,15 @@ interface StepDAO {
 //    @Delete
 //    fun delete(step: StepEntity)
 
+    @Delete
+    fun delete(steps: List<StepEntity>)
+
     @Query("SELECT * FROM Steps")
     fun getAll() : LiveData<List<StepEntity>>
 
     @Query("SELECT * FROM Steps WHERE recipe_id = :recipeId ORDER BY number")
     fun getAllByRecipeId(recipeId: Int): LiveData<List<StepEntity>>
+
+    @Query("SELECT * FROM Steps WHERE recipe_id = :recipeId ORDER BY number")
+    fun getAllByRecipeIdList(recipeId: Int): List<StepEntity>
 }
