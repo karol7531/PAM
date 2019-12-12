@@ -24,6 +24,7 @@ class RecipeAdapter(private val activity: Activity) : RecyclerView.Adapter<Recip
             notifyDataSetChanged()
         }
     private lateinit var onItemClickListener: OnItemClickListener
+    private lateinit var onLongItemClickListener: OnLongItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.recipe_item, parent,false)
@@ -72,6 +73,13 @@ class RecipeAdapter(private val activity: Activity) : RecyclerView.Adapter<Recip
                 onItemClickListener.onItemClick(selectedRecipe, adapterPosition)
             }
         }
+        val c = view.setOnLongClickListener {
+            if (adapterPosition != RecyclerView.NO_POSITION){
+                val selectedRecipe = getRecipeAtPosition(adapterPosition)
+                onLongItemClickListener.onItemLongClick(selectedRecipe, position = adapterPosition)
+            }
+            return@setOnLongClickListener true
+        }
         val nameTextView: TextView = view.findViewById(R.id.recipe_item_name)
         val imageButton: ImageView = view.findViewById(R.id.recipe_item_image)
     }
@@ -80,12 +88,20 @@ class RecipeAdapter(private val activity: Activity) : RecyclerView.Adapter<Recip
         return recipes[position]
     }
 
-    interface OnItemClickListener{
+    internal interface OnItemClickListener{
         fun onItemClick(recipe: RecipeEntity, position: Int)
     }
 
-    fun setOnItemCLickListener(listener: OnItemClickListener){
+    internal fun setOnItemCLickListener(listener: OnItemClickListener){
         this.onItemClickListener = listener
+    }
+
+    internal interface OnLongItemClickListener {
+        fun onItemLongClick(recipe:RecipeEntity, position: Int)
+    }
+
+    internal fun setOnLongItemClickListener(listener: OnLongItemClickListener){
+        this.onLongItemClickListener = listener
     }
 }
 

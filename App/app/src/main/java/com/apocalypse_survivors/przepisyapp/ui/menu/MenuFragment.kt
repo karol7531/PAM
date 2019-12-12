@@ -22,7 +22,7 @@ import com.apocalypse_survivors.przepisyapp.ui.activity.MainActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
-class MenuFragment : Fragment(), OnCategoryChangedListener {
+class MenuFragment : Fragment(), OnCategoryChangedListener{
 
     private lateinit var viewModel: MenuViewModel
     private lateinit var recyclerView: RecyclerView
@@ -61,7 +61,7 @@ class MenuFragment : Fragment(), OnCategoryChangedListener {
         //adapter
         recipeAdapter.setOnItemCLickListener(object : RecipeAdapter.OnItemClickListener{
             override fun onItemClick(recipe: RecipeEntity, position: Int) {
-                Log.i("MenuFragment", "item selected at position $position")
+                Log.i("MenuFragment", "item clicked at position $position")
                 viewModel.selectedRecipePosition = position
                 val selectAction = MenuFragmentDirections.selectAction()
                 selectAction.setRecipeId(recipe.id)
@@ -70,12 +70,25 @@ class MenuFragment : Fragment(), OnCategoryChangedListener {
             }
         })
 
+        recipeAdapter.setOnLongItemClickListener(object : RecipeAdapter.OnLongItemClickListener{
+            override fun onItemLongClick(recipe: RecipeEntity, position: Int) {
+                Log.i("MenuFragment", "item long clicked at position $position")
+                viewModel.selectedRecipePosition = position
+                val addAction = MenuFragmentDirections.addAction()
+                addAction.setRecipeId(recipe.id)
+                Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(addAction)
+                Log.d("MenuFragment", "navigate to ModifyFragment")
+            }
+
+        })
+
         setupData()
 
         //fab
         fab.setOnClickListener {
             Log.i("MenuFragment", "add fab clicked")
             Navigation.findNavController(activity!!, R.id.nav_host_fragment).navigate(R.id.add_action)
+            Log.d("MenuFragment", "navigate to ModifyFragment")
         }
 
         return root
