@@ -1,10 +1,7 @@
 package com.apocalypse_survivors.przepisyapp.database.DAO
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
 
 @Dao
@@ -12,8 +9,8 @@ interface RecipeDAO {
     @Insert
     fun insert(recipe : RecipeEntity):Long
 
-//    @Update
-//    fun update(recipe : RecipeEntity)
+    @Update
+    fun update(recipe : RecipeEntity)
 
     @Delete
     fun delete(recipe: RecipeEntity)

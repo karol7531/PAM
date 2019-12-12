@@ -18,7 +18,7 @@ class StepsAdapter(var stepsRecyclerView: RecyclerView) : RecyclerView.Adapter<S
         set(value) {
             Log.d("StepsAdapter", "steps setted, item_len = ${steps.size}")
             field = value
-            //not the best way to notify
+            field.add(StepEntity())
             notifyDataSetChanged()
         }
 
@@ -48,6 +48,7 @@ class StepsAdapter(var stepsRecyclerView: RecyclerView) : RecyclerView.Adapter<S
 
                 // we are at the last element and user typed in something -> add new item to the list
                 if (position == itemCount - 1){
+
                     addStep()
                 }
             }
@@ -59,12 +60,12 @@ class StepsAdapter(var stepsRecyclerView: RecyclerView) : RecyclerView.Adapter<S
     }
 
     internal fun addStep(){
-        Log.i("StepsAdapter", "AddStep")
         steps.add(StepEntity())
 
         //NOTE: notifyDataSetChanged() not working properly with TextChangedListener
         notifyItemInserted(steps.size - 1)
         stepsRecyclerView.requestLayout()
+        Log.i("StepsAdapter", "step added")
     }
 
     inner class StepsHolder(view: View) : RecyclerView.ViewHolder(view){

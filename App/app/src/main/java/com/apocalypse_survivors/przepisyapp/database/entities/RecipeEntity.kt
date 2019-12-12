@@ -2,9 +2,7 @@ package com.apocalypse_survivors.przepisyapp.database.entities
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.apocalypse_survivors.przepisyapp.R
 
 @Entity(tableName = "Recipes",
         foreignKeys = [
@@ -21,21 +19,21 @@ import com.apocalypse_survivors.przepisyapp.R
         ])
 class RecipeEntity (
 
-    val category_id : String,
+    var category_id : String,
 
-    val subcategory_id : String,
+    var subcategory_id : String,
 
-    val name : String,
+    var name : String,
 
-    val description : String,
+    var description : String,
 
-    val image : String,
+    var image : String,
 
-    val time : Int,
+    var time : Int,
 
-    val portion : Int,
+    var portion : Int,
 
-    val created : String
+    var created : String
 ){
 
 //    constructor() : this("UNSPECIFIED", "", "", "", "", 0, 0, "1970-01-01 00:00:00")

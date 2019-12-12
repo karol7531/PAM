@@ -19,9 +19,9 @@ class RecipeRepo(application: Application) {
         return recipeDAO.insert(recipe)
     }
 
-//    fun update(recipe: RecipeEntity){
-//
-//    }
+    fun update(recipe: RecipeEntity){
+        recipeDAO.update(recipe)
+    }
 
     fun delete(recipe: RecipeEntity){
         recipeDAO.delete(recipe)

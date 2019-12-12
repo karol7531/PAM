@@ -26,5 +26,5 @@ class StepEntity (
 
     var recipe_id : Int = -1
 
-    var description : String? = null
+    var description : String = ""
 }

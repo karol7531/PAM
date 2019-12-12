@@ -6,6 +6,7 @@ import android.content.Context
 import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import com.apocalypse_survivors.przepisyapp.common.DateTimeConverter
 import com.apocalypse_survivors.przepisyapp.database.entities.CategoryType
 import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
@@ -17,6 +18,9 @@ import java.util.concurrent.Executors
 
 class ModifyViewModel(application: Application) : AndroidViewModel(application) {
 
+    internal var recipeId: Int = -1
+    internal var steps: List<StepEntity> = listOf()
+    internal lateinit var recipe : RecipeEntity
     private val recipeRepo: RecipeRepo = RecipeRepo(application)
     private val stepRepo: StepRepo = StepRepo(application)
 
@@ -24,7 +28,7 @@ class ModifyViewModel(application: Application) : AndroidViewModel(application) 
     internal var imagePath : String = ""
 
     //TODO: update mode
-    fun saveRecipe(name: String, description: String, time: Int, portion:Int, steps : List<StepEntity>, context: Context):Boolean {
+    internal fun saveRecipe(name: String, description: String, time: Int, portion:Int, steps : List<StepEntity>, context: Context):Boolean {
 
         val dbCategory = findCategory(spinnerCategory, context)
         if (name.trim().isEmpty() || dbCategory == null){
@@ -48,6 +52,44 @@ class ModifyViewModel(application: Application) : AndroidViewModel(application) 
         return true
     }
 
+    internal fun updateRecipe(name: String, description: String, steps: List<StepEntity>, context: Context): Boolean {
+        val dbCategory = findCategory(spinnerCategory, context)
+        if (name.trim().isEmpty() || dbCategory == null){
+            return false
+        }
+
+        Executors.newSingleThreadExecutor().execute {
+            recipe.category_id = dbCategory.name
+            recipe.subcategory_id = dbCategory.name
+            recipe.description = description
+            recipe.name = name
+            recipe.image = imagePath
+            //created?
+
+            deleteSteps()
+            Log.d("ModifyViewModel", "old steps deleted")
+
+            update()
+            Log.d("ModifyViewModel", "recipe updated")
+
+            val correctSteps = prepareSteps(steps, recipeId)
+
+            insertSteps(correctSteps)
+            Log.d("ModifyViewModel", "steps saved")
+        }
+
+        return true
+    }
+
+    internal fun getRecipe(): LiveData<RecipeEntity> {
+        return recipeRepo.getRecipe(recipeId)
+    }
+
+    //WARN: recipe can not be initialized
+    internal fun getSteps(): LiveData<List<StepEntity>> {
+        return stepRepo.getAllByRecipeId(recipe.id)
+    }
+
     // filters out empty steps, sets proper recipeId and number
     private fun prepareSteps(steps: List<StepEntity>, recipeId: Int): List<StepEntity> {
         val correctSteps = steps.filter { !it.description.isNullOrEmpty() }
@@ -63,10 +105,18 @@ class ModifyViewModel(application: Application) : AndroidViewModel(application) 
         stepRepo.insert(steps)
     }
 
+    private fun deleteSteps() {
+        stepRepo.deleteSteps(steps)
+    }
+
     private fun insert(recipe: RecipeEntity) : Long{
 //        Executors.newSingleThreadExecutor().execute {
             return recipeRepo.insert(recipe)
 //        }
+    }
+
+    private fun update() {
+        recipeRepo.update(recipe)
     }
 
     internal fun getSpinnerAdapter(context: Context): ArrayAdapter<String> {
