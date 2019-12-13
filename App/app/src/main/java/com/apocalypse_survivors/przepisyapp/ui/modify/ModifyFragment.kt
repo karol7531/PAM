@@ -36,7 +36,7 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
     private lateinit var ingredientsEdit : EditText
     private lateinit var fab: FloatingActionButton
     private lateinit var spinner: Spinner
-    private lateinit var imageButton: ImageButton
+    private lateinit var image: ImageView
     private lateinit var stepsRecyclerView: RecyclerView
     private lateinit var stepsAdapter: StepsAdapter
     private enum class Mode {Add, Modify}
@@ -47,7 +47,7 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
         viewModel = ViewModelProviders.of(this).get(ModifyViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_modify, container, false)
 
-        imageButton = root.findViewById(R.id.modify_imageButton_add)
+        image = root.findViewById(R.id.modify_image)
         spinner = root.findViewById(R.id.modify_cat_spinner)
         fab = root.findViewById(R.id.modify_fab_done)
         nameEdit = root.findViewById(R.id.modify_text_name)
@@ -103,7 +103,7 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
         spinner.onItemSelectedListener = this
 
         //image button
-        imageButton.setOnClickListener {
+        image.setOnClickListener {
             Log.i("ModifyFragment", "image button clicked")
             if(ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_DENIED) {
                 requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_CODE_READ)
@@ -134,7 +134,9 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
     private fun setDesc() {
         nameEdit.setText(viewModel.recipe.name)
         ingredientsEdit.setText(viewModel.recipe.description)
-        stepsAdapter.steps = viewModel.steps as MutableList<StepEntity>
+        if (viewModel.steps.isNotEmpty()) {
+            stepsAdapter.steps = viewModel.steps as MutableList<StepEntity>
+        }
     }
 
     // gets passed arguments from bundle
@@ -158,7 +160,7 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
         viewModel.spinnerCategory = parent?.getItemAtPosition(position).toString()
     }
 
-    //imageButton
+    //image
     private fun pickFromGallery() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.type = "image/*"
@@ -179,7 +181,9 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
         Glide
             .with(context!!)
             .load(imgUri)
-            .into(imageButton)
+            .centerCrop()
+            .placeholder(R.drawable.ic_add_photo)
+            .into(image)
         viewModel.imagePath = imgUri.toString()
         Log.d("RecipeFragment", "image setted")
     }

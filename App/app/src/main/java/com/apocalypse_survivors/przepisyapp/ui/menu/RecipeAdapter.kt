@@ -43,27 +43,17 @@ class RecipeAdapter(private val activity: Activity) : RecyclerView.Adapter<Recip
 
         //image
         Log.v("RecipeAdapter", "imgPath: ${currentRecipe.image}")
-        if (currentRecipe.image.isNotEmpty()){
-            try {
-                val imgUri = Uri.parse(currentRecipe.image)
-                Glide
-                    .with(activity)
-                    .load(imgUri)
-                    .into(holder.imageButton)
-            } catch (e: NullPointerException) {
-                Log.w("RecipeAdapter", "image not found: ${currentRecipe.image}")
-                glideBasicImg(holder)
-            }
-        }else{
-            glideBasicImg(holder)
+        try {
+            val imgUri = Uri.parse(currentRecipe.image)
+            Glide
+                .with(activity)
+                .load(imgUri)
+                .centerCrop()
+                .placeholder(R.drawable.ic_fast_food)
+                .into(holder.imageButton)
+        } catch (e: NullPointerException) {
+            Log.w("RecipeAdapter", "image not found: ${currentRecipe.image}")
         }
-    }
-
-    private fun glideBasicImg(holder: RecipeHolder) {
-        Glide
-            .with(activity)
-            .load(R.drawable.ic_fast_food)
-            .into(holder.imageButton)
     }
 
     inner class RecipeHolder(view: View) : RecyclerView.ViewHolder(view){

@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/modify_imageButton_add"
+    <ImageView
+        android:id="@+id/modify_image"
         android:layout_width="0dp"
         android:layout_height="250dp"
+        android:background="#80BEBEBE"
+        android:scaleType="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,7 +22,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:layout_marginEnd="@dimen/fab_margin"
-        app:layout_constraintBottom_toBottomOf="@+id/modify_imageButton_add"
+        app:layout_constraintBottom_toBottomOf="@+id/modify_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nestedScrollView"
         app:srcCompat="@drawable/ic_check" />
@@ -33,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/modify_imageButton_add">
+        app:layout_constraintTop_toBottomOf="@+id/modify_image">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

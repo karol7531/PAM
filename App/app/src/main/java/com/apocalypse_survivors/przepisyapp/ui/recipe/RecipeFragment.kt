@@ -70,10 +70,12 @@ class RecipeFragment : Fragment() {
             Glide
                 .with(context!!)
                 .load(imgUri)
+                .centerCrop()
+                .placeholder(R.drawable.ic_fast_food)
                 .into(image)
             Log.d("RecipeFragment", "image setted")
         } catch (e: Exception) {
-            Log.w("RecipeAdapter", "image not found: ${viewModel.recipe.image}")
+            Log.w("RecipeFragment", "image not found: ${viewModel.recipe.image}")
         }
     }
 
