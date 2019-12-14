@@ -23,6 +23,8 @@ class ModifyViewModel(application: Application) : AndroidViewModel(application) 
     internal lateinit var recipe : RecipeEntity
     private val recipeRepo: RecipeRepo = RecipeRepo(application)
     private val stepRepo: StepRepo = StepRepo(application)
+    internal enum class Mode {Add, Modify}
+    internal lateinit var mode : Mode
 
     internal lateinit var spinnerCategory: String
     internal var imagePath : String = ""

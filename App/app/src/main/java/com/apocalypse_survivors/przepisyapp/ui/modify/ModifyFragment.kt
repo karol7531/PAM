@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.apocalypse_survivors.przepisyapp.R
 import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
 import com.apocalypse_survivors.przepisyapp.database.entities.StepEntity
+import com.apocalypse_survivors.przepisyapp.ui.activity.MainActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -39,8 +40,6 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
     private lateinit var image: ImageView
     private lateinit var stepsRecyclerView: RecyclerView
     private lateinit var stepsAdapter: StepsAdapter
-    private enum class Mode {Add, Modify}
-    private lateinit var mode : Mode
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -64,9 +63,11 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
 
         getNavigationArguments()
 
-        if (mode == Mode.Modify){
+        if (viewModel.mode == ModifyViewModel.Mode.Modify){
             setupData()
         }
+
+        setToolbarTitle()
 
         //fab
         fab.setOnClickListener {
@@ -74,7 +75,7 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
             val name = nameEdit.text.toString()
             val ingredients = ingredientsEdit.text.toString()
             val steps = stepsAdapter.steps
-            if (mode == Mode.Add) {
+            if (viewModel.mode == ModifyViewModel.Mode.Add) {
                 Log.d("ModifyFragment", "begin add new recipe and steps")
                 //WARN: some values are hardcoded
                 if(!viewModel.saveRecipe(name, ingredients, 0, 0, steps, context!!)){
@@ -131,6 +132,11 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
             })
     }
 
+    private fun setToolbarTitle() {
+        //WARN: activity cast
+        (activity as MainActivity).setToolbarTitle(viewModel.mode.name)
+    }
+
     private fun setDesc() {
         nameEdit.setText(viewModel.recipe.name)
         ingredientsEdit.setText(viewModel.recipe.description)
@@ -144,10 +150,10 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
         arguments?.let {
             val args = ModifyFragmentArgs.fromBundle(it)
             viewModel.recipeId = args.recipeId
-            mode = if (args.recipeId >= 0){
-                Mode.Modify
+                viewModel.mode = if (args.recipeId >= 0){
+                ModifyViewModel.Mode.Modify
             } else{
-                Mode.Add
+                ModifyViewModel.Mode.Add
             }
         }
     }

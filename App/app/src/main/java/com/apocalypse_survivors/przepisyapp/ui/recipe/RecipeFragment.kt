@@ -88,6 +88,7 @@ class RecipeFragment : Fragment() {
     private fun setDesc(){
         desc.text = viewModel.getDescText()
         Log.d("RecipeFragment", "description setted")
+//        Log.v("RecipeFragment", "desc: ${desc.text}")
     }
 
     //TODO: make it work as it should -> no getRecipe()
