@@ -26,6 +26,9 @@
         <argument
             android:name="steps"
             app:argType="string[]" />
+        <argument
+            android:name="recipeName"
+            app:argType="string" />
     </fragment>
 
     <fragment

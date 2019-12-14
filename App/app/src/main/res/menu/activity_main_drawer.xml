@@ -3,10 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 <!-- items in CategoryType must be the same-->
-    <item
-        android:id="@+id/drawer_all"
-        android:icon="@drawable/ic_square"
-        android:title="@string/ALL" />
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_all"
+            android:icon="@drawable/ic_square"
+            android:title="@string/ALL" />
+    </group>
 
     <item android:title="@string/menu_categories">
         <menu>

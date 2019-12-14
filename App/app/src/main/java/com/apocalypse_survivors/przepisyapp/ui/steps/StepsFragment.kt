@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.apocalypse_survivors.przepisyapp.R
+import com.apocalypse_survivors.przepisyapp.ui.activity.MainActivity
 import java.util.*
 
 
@@ -33,6 +34,8 @@ class StepsFragment : Fragment() {
         textView = root.findViewById(R.id.steps_descripton)
 
         getNavigationArguments()
+
+        setToolbarTitle()
 
         changeText()
 
@@ -80,11 +83,17 @@ class StepsFragment : Fragment() {
         return root
     }
 
+    private fun setToolbarTitle() {
+        //WARN: activity cast
+        (activity as MainActivity).setToolbarTitle("${viewModel.recipeName}  >  ${getString(R.string.menu_steps)}")
+    }
+
     // gets passed arguments from bundle
     private fun getNavigationArguments() {
         arguments?.let {
             val args = StepsFragmentArgs.fromBundle(it)
             viewModel.steps = args.steps
+            viewModel.recipeName = args.recipeName
         }
     }
 

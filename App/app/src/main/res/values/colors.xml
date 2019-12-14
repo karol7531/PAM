@@ -9,10 +9,16 @@
     <color name="colorPrimaryHalfLight">#8a50ad</color>
     <color name="colorPrimaryLight">#9c4dcc</color>
 
-    <color name="colorSecondaryyDark">#001970</color>
-    <color name="colorSecondary">#303F9F</color>
-    <color name="colorSecondaryLight">#666ad1</color>
+<!--    <color name="colorSecondaryyDark">#001970</color>-->
+<!--    <color name="colorSecondary">#303F9F</color>-->
+<!--    <color name="colorSecondaryLight">#666ad1</color>-->
 
-    <color name="colorAccent">#303F9F</color>
+<!--    <color name="colorAccent">#303F9F</color>-->
+
+    <color name="colorSecondaryyDark">#004ba0</color>
+    <color name="colorSecondary">#1976d2</color>
+    <color name="colorSecondaryLight">#63a4ff</color>
+
+    <color name="colorAccent">#1976d2</color>
 
 </resources>

@@ -51,9 +51,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun setToolbarTitle() {
         if (viewModel.categorySelected != null) {
-            supportActionBar?.title = viewModel.categorySelected?.getLabel(this)
-            Log.d("MainActivity", "toolbar title setted")
+            setToolbarTitle(viewModel.categorySelected?.getLabel(this))
         }
+    }
+
+    fun setToolbarTitle(title: String?){
+        supportActionBar?.title = title
+        Log.d("MainActivity", "toolbar title setted")
     }
 
     // calls OnCategoryChanged() on every fragment which is OnCategoryChangedListener
@@ -73,6 +77,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.setupWithNavController(navController)
         setupActionBarWithNavController(navController, drawer)
         navView.setNavigationItemSelectedListener(this)
+
+        //sets the ALL item to be checked on startup
+        onNavigationItemSelected(navView.menu.getItem(0))
+        navView.menu.getItem(0).isChecked = true
+
         Log.d("MainActivity", "Navigation setted up")
     }
 

@@ -16,6 +16,7 @@ import androidx.navigation.Navigation
 import com.apocalypse_survivors.przepisyapp.R
 import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
 import com.apocalypse_survivors.przepisyapp.database.entities.StepEntity
+import com.apocalypse_survivors.przepisyapp.ui.activity.MainActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -43,7 +44,7 @@ class RecipeFragment : Fragment() {
         fab.setOnClickListener {
             Log.i("RecipeFragment", "fab clicked")
             if (viewModel.steps.isNotEmpty()) {
-                val stepsAction = RecipeFragmentDirections.stepsAction(arrayOf())
+                val stepsAction = RecipeFragmentDirections.stepsAction(arrayOf(), viewModel.recipe.name)
                 stepsAction.setSteps(viewModel.steps.map {
                         step -> "${step.description}"
                 }.toTypedArray())
@@ -54,6 +55,11 @@ class RecipeFragment : Fragment() {
         }
 
         return root
+    }
+
+    private fun setToolbarTitle() {
+        //WARN: activity cast
+        (activity as MainActivity).setToolbarTitle(viewModel.recipe.name)
     }
 
     // gets passed arguments from bundle
@@ -93,6 +99,7 @@ class RecipeFragment : Fragment() {
                 viewModel.getSteps().observe(this,
                     Observer<List<StepEntity>> { steps ->
                         viewModel.steps = steps
+                        setToolbarTitle()
                         setDesc()
                     })
 
