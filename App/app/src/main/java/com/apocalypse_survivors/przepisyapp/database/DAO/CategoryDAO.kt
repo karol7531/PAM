@@ -1,7 +1,9 @@
 package com.apocalypse_survivors.przepisyapp.database.DAO
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
 import com.apocalypse_survivors.przepisyapp.database.entities.CategoryEntity
 
 @Dao
