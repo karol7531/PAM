@@ -16,10 +16,12 @@ class MenuViewModel(application: Application) : AndroidViewModel(application) {
 
     private val recipeRepo: RecipeRepo = RecipeRepo(application)
     private val stepRepo: StepRepo = StepRepo(application)
-    private var categoryType: CategoryType? = null
+    internal var categoryType: CategoryType? = null
     internal var selectedRecipePosition: Int = 0
     internal lateinit var recipes : LiveData<List<RecipeEntity>>
     private var recentlyDeleted : RecentlyDeleted? = null
+    internal var showHint:Boolean = true
+    internal var hintSnackbarCounter = -1
 
     private class RecentlyDeleted(val recipe:RecipeEntity, val steps:List<StepEntity>)
 

@@ -1,10 +1,13 @@
 package com.apocalypse_survivors.przepisyapp.ui.activity
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
@@ -16,7 +19,11 @@ import com.apocalypse_survivors.przepisyapp.R
 import com.apocalypse_survivors.przepisyapp.findCategory
 import com.google.android.material.navigation.NavigationView
 
-
+//TODO:spinner selection on modify load,
+// correct drawer selections,
+// correct menu recipes observers,
+// descriptions styles and headers,
+// modify collapsing app bar layout
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var viewModel: MainActivityViewModel
@@ -40,6 +47,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
+    //BUG: sometimes item does not light up
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         viewModel.categorySelected = findCategory(item.title.toString(), this)
         Log.i("MainActivity", "category selected: ${viewModel.categorySelected}")
@@ -49,7 +57,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    private fun setToolbarTitle() {
+    fun setToolbarTitle() {
         if (viewModel.categorySelected != null) {
             setToolbarTitle(viewModel.categorySelected?.getLabel(this))
         }
@@ -79,8 +87,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.setNavigationItemSelectedListener(this)
 
         //sets the ALL item to be checked on startup
-        onNavigationItemSelected(navView.menu.getItem(0))
-        navView.menu.getItem(0).isChecked = true
+        checkAllIfNothingSelected()
 
         Log.d("MainActivity", "Navigation setted up")
     }
@@ -96,8 +103,53 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Log.i("MainActivity", "Navigated up")
         val toRet = navController.navigateUp(drawerLayout = findViewById(R.id.drawer_layout)) || super.onSupportNavigateUp()
         setToolbarTitle()
+        hideKeyboard()
+//        checkAllIfNothingSelected()
         return toRet
     }
 
+    private fun checkAllIfNothingSelected() {
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        //WARN: ALL item as 0 position
+        if (viewModel.categorySelected == null){
+            onNavigationItemSelected(navView.menu.getItem(0))
+            navView.menu.getItem(0).isChecked = true
+        }
+//        if(getCheckedItem(navView) == -1){
+//            onNavigationItemSelected(navView.menu.getItem(0))
+//            navView.menu.getItem(0).isChecked = true
+//        }
+    }
+
     fun getCategorySelected() = viewModel.categorySelected
+
+    private fun getCheckedItem(navigationView: NavigationView): Int {
+        val menu = navigationView.menu
+        for (i in 0 until menu.size()) {
+            val item = menu[i]
+            if (item.isChecked) {
+                return i
+            }
+        }
+
+        return -1
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        setToolbarTitle()
+        hideKeyboard()
+    }
+
+    fun hideKeyboard() {
+        val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+
+        if (currentFocus != null) {
+            inputManager!!.hideSoftInputFromWindow(
+                currentFocus.windowToken,
+                InputMethodManager.HIDE_NOT_ALWAYS
+            )
+            Log.d("MainActivity", "Hiding keyboard")
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.apocalypse_survivors.przepisyapp.ui.menu
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -29,6 +30,12 @@ class MenuFragment : Fragment(), OnCategoryChangedListener{
     private lateinit var recipeAdapter : RecipeAdapter
     private lateinit var fab: FloatingActionButton
     private lateinit var layout: CoordinatorLayout
+
+    companion object{
+        const val UNDO_SNACKBAR_DURATION : Long = 10000
+        const val HINT_SNACKBAR_DURATION : Long = 20000
+        const val SIS_hintSnackbarCounter : String = "hintSnackbarCounter"
+    }
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
         viewModel = ViewModelProviders.of(this).get(MenuViewModel::class.java)
@@ -94,6 +101,46 @@ class MenuFragment : Fragment(), OnCategoryChangedListener{
         return root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        restorePreferences()
+
+        //show snackbar with hint
+        if(viewModel.hintSnackbarCounter <= 5 && viewModel.showHint){
+            // snackbar with hint button
+            showSnackbar(R.string.snackbar_hint, R.string.ok, {}, HINT_SNACKBAR_DURATION, true)
+            viewModel.showHint = false
+            Log.v("MenuFragment","$SIS_hintSnackbarCounter: ${viewModel.hintSnackbarCounter}")
+        }
+    }
+
+    private fun restorePreferences(){
+        val settings = activity!!.getPreferences(Context.MODE_PRIVATE)
+
+        viewModel.hintSnackbarCounter = settings.getInt(SIS_hintSnackbarCounter,0)
+
+        Log.d("MenuFragment", "Preferences restored")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        storePreferences()
+    }
+
+    private fun storePreferences() {
+        // We need an Editor object to make preference changes.
+        // All objects are from android.context.Context
+        // if we want more sharedPreferences files we can use getSharedPreferences(filename, mode)
+        val settings = activity!!.getPreferences(Context.MODE_PRIVATE)
+        val editor = settings.edit()
+
+        editor.putInt(SIS_hintSnackbarCounter, viewModel.hintSnackbarCounter + 1)
+        // Apply the edits! - async
+        editor.apply()
+
+        Log.d("MenuFragment", "Preferences stored")
+    }
+
     private fun delayedDelete(adapterPosition: Int) {
         val recipe = recipeAdapter.getRecipeAtPosition(adapterPosition)
 
@@ -101,22 +148,32 @@ class MenuFragment : Fragment(), OnCategoryChangedListener{
         Log.d("MenuFragment", "recipe deleted ${recipe.id}")
 
         // snackbar with undo button
-        val snackbar = Snackbar.make(layout, getString(R.string.recipe_deleted), Snackbar.LENGTH_INDEFINITE).also {
-            it.setAction(getString(R.string.undo), View.OnClickListener {
-                Log.i("MenuFragment", "undo cliicked")
-                viewModel.reviveRecentlyDeleted()
-                Snackbar.make(layout, getString(R.string.undo_successful), Snackbar.LENGTH_SHORT).show()
+        showSnackbar(R.string.recipe_deleted, R.string.undo, {
+            viewModel.reviveRecentlyDeleted()
+            Snackbar.make(layout, getString(R.string.undo_successful), Snackbar.LENGTH_LONG).show()
+        }, UNDO_SNACKBAR_DURATION, false)
+    }
+
+    private fun showSnackbar(descResource:Int, actionResource:Int, action: ()->Unit, duration: Long, dismissOnClick:Boolean){
+        // snackbar with button
+        val snackbar= Snackbar.make(layout, descResource, Snackbar.LENGTH_INDEFINITE).also {s ->
+            s.setAction(actionResource, View.OnClickListener {
+                Log.i("MenuFragment", "${getString(actionResource)} on snackbar clicked")
+                action()
+                if(dismissOnClick){
+                    s.dismiss()
+                }
             })
-            it.show()
+            s.show()
         }
 
         // dismiss after time
         Handler().postDelayed({
-            Log.d("MenuFragment", "delayedDelete handler post delayed")
             if(snackbar.isShown){
                 snackbar.dismiss()
+                Log.d("MenuFragment", "snackbar closed -> no user response")
             }
-        }, 5000)
+        }, duration)
     }
 
     private fun scrollRecycler(){
@@ -128,7 +185,12 @@ class MenuFragment : Fragment(), OnCategoryChangedListener{
     private fun setupData() {
         //WARN: not safe activity cast
         viewModel.setupData((activity as MainActivity).getCategorySelected())
+        //WARN: activity cast
+        (activity as MainActivity).setToolbarTitle()
 
+        viewModel.recipes.removeObservers(activity!!)
+
+        //BUG: live data sometimes observe something it shouldn't be observing -> wrong items are observed
         viewModel.recipes.observe(this,
             Observer<List<RecipeEntity>> {
                 if (recipeAdapter.recipes != it) {

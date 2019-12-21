@@ -20,7 +20,6 @@ import com.apocalypse_survivors.przepisyapp.ui.activity.MainActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-//TODO: toolbar desc
 class RecipeFragment : Fragment() {
 
     private lateinit var viewModel: RecipeViewModel
@@ -34,7 +33,7 @@ class RecipeFragment : Fragment() {
 
         image = root.findViewById(R.id.recipe_image)
         fab = root.findViewById(R.id.recipe_fab_play)
-        desc = root.findViewById(R.id.recipe_descripton)
+        desc = root.findViewById(R.id.recipe_description)
 
         getNavigationArguments()
 

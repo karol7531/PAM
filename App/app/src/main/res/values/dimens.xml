@@ -7,4 +7,5 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="step_button_height">120dp</dimen>
+    <dimen name="recipe_img_height">250dp</dimen>
 </resources>

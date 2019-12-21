@@ -2,7 +2,7 @@
     <string name="app_name">RecipesApp</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Recipes App</string>
+    <string name="nav_header_title">Recipes App by Karol Szałajko</string>
     <string name="nav_header_subtitle">Welcome! Choose category</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
@@ -49,5 +49,7 @@ postaci wartości ze stringów, a string array powinien zostać zamieniony na ad
     <string name="undo">UNDO</string>
     <string name="undo_successful">Undo successful</string>
     <string name="update_success">Updated successfully</string>
+    <string name="snackbar_hint">Click and hold on a recipe to modify it. Swipe right to delete it.</string>
+    <string name="ok">OK</string>
 
 </resources>
