@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.apocalypse_survivors.przepisyapp.R
 import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
 import com.apocalypse_survivors.przepisyapp.database.entities.StepEntity
@@ -26,6 +28,8 @@ class RecipeFragment : Fragment() {
     private lateinit var image: ImageView
     private lateinit var fab: FloatingActionButton
     private lateinit var desc: TextView
+    private lateinit var stepsRecyclerView: RecyclerView
+    private lateinit var stepsAdapter: StepsAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
@@ -34,6 +38,14 @@ class RecipeFragment : Fragment() {
         image = root.findViewById(R.id.recipe_image)
         fab = root.findViewById(R.id.recipe_fab_play)
         desc = root.findViewById(R.id.recipe_description)
+        stepsRecyclerView = root.findViewById(R.id.recipe_steps_recyclerview)
+        stepsAdapter = StepsAdapter()
+
+        //stepsRecyclerView
+        stepsRecyclerView.layoutManager = LinearLayoutManager(context)
+        stepsRecyclerView.setHasFixedSize(true)
+        stepsRecyclerView.adapter = stepsAdapter
+        stepsRecyclerView.isNestedScrollingEnabled = false
 
         getNavigationArguments()
 
@@ -86,6 +98,12 @@ class RecipeFragment : Fragment() {
 
     private fun setDesc(){
         desc.text = viewModel.getDescText()
+        desc.text = viewModel.recipe.description
+
+        if (viewModel.steps.isNotEmpty()) {
+            stepsAdapter.steps = viewModel.steps as MutableList<StepEntity>
+        }
+
         Log.d("RecipeFragment", "description setted")
 //        Log.v("RecipeFragment", "desc: ${desc.text}")
     }

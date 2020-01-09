@@ -21,9 +21,7 @@ import com.google.android.material.navigation.NavigationView
 
 //TODO:spinner selection on modify load,
 // correct drawer selections,
-// correct menu recipes observers,
-// descriptions styles and headers,
-// modify collapsing app bar layout
+// correct menu recipes observers
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var viewModel: MainActivityViewModel

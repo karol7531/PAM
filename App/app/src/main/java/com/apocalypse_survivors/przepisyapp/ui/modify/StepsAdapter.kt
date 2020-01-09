@@ -23,7 +23,7 @@ class StepsAdapter(var stepsRecyclerView: RecyclerView) : RecyclerView.Adapter<S
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StepsHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.step_item, parent,false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.modify_step_item, parent,false)
         return StepsHolder(itemView)
     }
 
