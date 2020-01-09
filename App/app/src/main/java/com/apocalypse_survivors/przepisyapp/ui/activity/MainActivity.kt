@@ -19,7 +19,7 @@ import com.apocalypse_survivors.przepisyapp.R
 import com.apocalypse_survivors.przepisyapp.findCategory
 import com.google.android.material.navigation.NavigationView
 
-//TODO:spinner selection on modify load,
+//TODO:
 // correct drawer selections,
 // correct menu recipes observers
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {

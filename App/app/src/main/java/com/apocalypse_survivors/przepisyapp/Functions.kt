@@ -10,6 +10,11 @@ fun findCategory(label: String, context:Context): CategoryType? {
         if(it.isMainCategory && it.getLabel(context) == label)
             return it
     }
+    CategoryType.values().forEach {
+        if(it.isMainCategory && it.name == label){
+            return it
+        }
+    }
     return null
 }
 

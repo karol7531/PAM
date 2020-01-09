@@ -18,8 +18,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.apocalypse_survivors.przepisyapp.R
+import com.apocalypse_survivors.przepisyapp.database.entities.CategoryType
 import com.apocalypse_survivors.przepisyapp.database.entities.RecipeEntity
 import com.apocalypse_survivors.przepisyapp.database.entities.StepEntity
+import com.apocalypse_survivors.przepisyapp.findCategory
 import com.apocalypse_survivors.przepisyapp.ui.activity.MainActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -143,6 +145,19 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
         if (viewModel.steps.isNotEmpty()) {
             stepsAdapter.steps = viewModel.steps as MutableList<StepEntity>
         }
+        val spinnerCategory = findCategory(viewModel.recipe.category_id, context!!)
+        spinner.setSelection(getSpinnerItem(spinnerCategory!!))
+    }
+
+    private fun getSpinnerItem(category: CategoryType): Int{
+        val spinnerList = viewModel.getSpinnerList(context!!)
+        for((position, item) in spinnerList.withIndex()){
+            val itemCategory = findCategory(item, context!!)
+            if (itemCategory == category){
+                return position
+            }
+        }
+        return 0
     }
 
     // gets passed arguments from bundle
@@ -162,6 +177,7 @@ class ModifyFragment : Fragment(), AdapterView.OnItemSelectedListener{
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     //spinner
+    //this also executes at fragment creation
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         viewModel.spinnerCategory = parent?.getItemAtPosition(position).toString()
     }
