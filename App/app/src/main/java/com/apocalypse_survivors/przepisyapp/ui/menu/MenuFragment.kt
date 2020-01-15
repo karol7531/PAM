@@ -34,7 +34,7 @@ class MenuFragment : Fragment(), OnCategoryChangedListener{
     companion object{
         const val UNDO_SNACKBAR_DURATION : Long = 10000
         const val HINT_SNACKBAR_DURATION : Long = 20000
-        const val SIS_hintSnackbarCounter : String = "hintSnackbarCounter"
+        const val PREF_hintSnackbarCounter : String = "hintSnackbarCounter"
     }
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
@@ -110,14 +110,15 @@ class MenuFragment : Fragment(), OnCategoryChangedListener{
             // snackbar with hint button
             showSnackbar(R.string.snackbar_hint, R.string.ok, {}, HINT_SNACKBAR_DURATION, true)
             viewModel.showHint = false
-            Log.v("MenuFragment","$SIS_hintSnackbarCounter: ${viewModel.hintSnackbarCounter}")
+            Log.v("MenuFragment","$PREF_hintSnackbarCounter: ${viewModel.hintSnackbarCounter}")
+            viewModel.hintSnackbarCounter ++
         }
     }
 
     private fun restorePreferences(){
         val settings = activity!!.getPreferences(Context.MODE_PRIVATE)
 
-        viewModel.hintSnackbarCounter = settings.getInt(SIS_hintSnackbarCounter,0)
+        viewModel.hintSnackbarCounter = settings.getInt(PREF_hintSnackbarCounter,0)
 
         Log.d("MenuFragment", "Preferences restored")
     }
@@ -134,7 +135,7 @@ class MenuFragment : Fragment(), OnCategoryChangedListener{
         val settings = activity!!.getPreferences(Context.MODE_PRIVATE)
         val editor = settings.edit()
 
-        editor.putInt(SIS_hintSnackbarCounter, viewModel.hintSnackbarCounter + 1)
+        editor.putInt(PREF_hintSnackbarCounter, viewModel.hintSnackbarCounter)
         // Apply the edits! - async
         editor.apply()
 

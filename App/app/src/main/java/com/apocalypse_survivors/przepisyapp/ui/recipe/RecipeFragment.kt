@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -28,6 +29,9 @@ class RecipeFragment : Fragment() {
     private lateinit var image: ImageView
     private lateinit var fab: FloatingActionButton
     private lateinit var desc: TextView
+    private lateinit var ingredientsCard:CardView
+    private lateinit var ingredientsTitle:TextView
+    private lateinit var stepsTitle:TextView
     private lateinit var stepsRecyclerView: RecyclerView
     private lateinit var stepsAdapter: StepsAdapter
 
@@ -38,6 +42,9 @@ class RecipeFragment : Fragment() {
         image = root.findViewById(R.id.recipe_image)
         fab = root.findViewById(R.id.recipe_fab_play)
         desc = root.findViewById(R.id.recipe_description)
+        ingredientsCard = root.findViewById(R.id.recipe_ingredients)
+        ingredientsTitle = root.findViewById(R.id.recipe_ingredients_title)
+        stepsTitle = root.findViewById(R.id.recipe_steps_title)
         stepsRecyclerView = root.findViewById(R.id.recipe_steps_recyclerview)
         stepsAdapter = StepsAdapter()
 
@@ -97,11 +104,22 @@ class RecipeFragment : Fragment() {
     }
 
     private fun setDesc(){
-        desc.text = viewModel.getDescText()
-        desc.text = viewModel.recipe.description
+        if (viewModel.recipe.description.isNullOrBlank()){
+            ingredientsCard.visibility = View.GONE
+            ingredientsTitle.visibility = View.GONE
+        }
+        else{
+            ingredientsCard.visibility = View.VISIBLE
+            ingredientsTitle.visibility = View.VISIBLE
+            desc.text = viewModel.recipe.description
+        }
 
         if (viewModel.steps.isNotEmpty()) {
+            stepsTitle.visibility = View.VISIBLE
             stepsAdapter.steps = viewModel.steps as MutableList<StepEntity>
+        }
+        else{
+            stepsTitle.visibility = View.GONE
         }
 
         Log.d("RecipeFragment", "description setted")

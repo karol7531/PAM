@@ -19,9 +19,6 @@ import com.apocalypse_survivors.przepisyapp.R
 import com.apocalypse_survivors.przepisyapp.findCategory
 import com.google.android.material.navigation.NavigationView
 
-//TODO:
-// correct drawer selections,
-// correct menu recipes observers
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var viewModel: MainActivityViewModel
