@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.apocalypse_survivors.przepisyapp.R
 import com.apocalypse_survivors.przepisyapp.database.entities.StepEntity
 
+
 class StepsAdapter(var stepsRecyclerView: RecyclerView) : RecyclerView.Adapter<StepsAdapter.StepsHolder>() {
 
     internal var steps : MutableList<StepEntity> = mutableListOf()

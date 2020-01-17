@@ -51,5 +51,7 @@ postaci wartości ze stringów, a string array powinien zostać zamieniony na ad
     <string name="update_success">Updated successfully</string>
     <string name="snackbar_hint">Click and hold on a recipe to modify it. Swipe right to delete it.</string>
     <string name="ok">OK</string>
+    <string name="recipe_name">Recipe name</string>
+    <string name="recipe_ingredients">Recipe ingredients</string>
 
 </resources>
