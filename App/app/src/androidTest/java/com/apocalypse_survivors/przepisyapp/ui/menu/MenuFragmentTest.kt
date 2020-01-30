@@ -1,6 +1,7 @@
 package com.apocalypse_survivors.przepisyapp.ui.menu
 
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -25,11 +26,10 @@ class MenuFragmentTest {
     private val recipeName = "name test"
     private val recipeIngredients = "ingredients description"
     private val steps = listOf(
-//        "first step test",
-//        "testing second step",
-//        "third step",
-//        "fourth step just to be sure",
-        "and the last is the fifth step")
+        "first step test",
+        "testing second step",
+        "third step",
+        "last, fourth step")
     private var itemsCount = 1
 
     @get:Rule
@@ -82,11 +82,17 @@ class MenuFragmentTest {
         onView(withId(R.id.modify_fab_done))
             .perform(click())
 
+
         //MenuFragment
-        //click on added recipe item
+        //scroll to added recipe item
         var matcher = RecipeRecyclerViewTextMatcher().withTitle(recipeName)
         onView(withId(R.id.menu_recycler_view))
             .perform(scrollToHolder(matcher))
+
+        Thread.sleep(2000)
+
+        //click on added recipe item
+        onView(withId(R.id.menu_recycler_view))
             .perform(actionOnHolderItem(matcher, click()))
 
         //RecipeFragment
@@ -108,26 +114,22 @@ class MenuFragmentTest {
                 .check(matches(withText(step)))
         }
 
+        Thread.sleep(2000)
+
         //go back to MenuFragment
         pressBack()
 
+        Thread.sleep(2000)
+
         //MenuFragment
         //swipe right added recipe item
-//        matcher = RecipeRecyclerViewTextMatcher().withTitle(recipeName)
-//        onView(withId(R.id.menu_recycler_view))
-//            .perform(scrollToHolder(matcher))
-//            .perform(actionOnHolderItem(matcher, swipeRight()))
-//
-//
-//        Thread.sleep(2000)
-    }
-
-    @Test
-    fun testSwipe(){
-        val matcher = RecipeRecyclerViewTextMatcher().withTitle(recipeName)
+        matcher = RecipeRecyclerViewTextMatcher().withTitle(recipeName)
         onView(withId(R.id.menu_recycler_view))
             .perform(scrollToHolder(matcher))
             .perform(actionOnHolderItem(matcher, swipeRight()))
+
+
+        Thread.sleep(2000)
     }
 
     @After
